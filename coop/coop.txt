@@ -1,0 +1,11 @@
+"Gamemode"
+{
+	"base"		"base"
+	"title"		"Co-op"
+	"maps"		"^oc_"
+	"menusystem"	"1"
+	"workshopid"	""
+	
+	"settings"
+
+}
