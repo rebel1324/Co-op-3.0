@@ -49,47 +49,47 @@ end
 
 local gridsize = 1
 
-if SERVER then
-	function SWEP:PrimaryAttack()
-	end
+if (CLIENT) then
+	netstream.Hook("PosHelper_1", function(data)
+				AddNotice( "Click again to get box vector.", 5 )
+	end)
 
-	function SWEP:Reload()
-	end
+	netstream.Hook("PosHelper_2", function(min, max)
+	  			SetClipboardText( Format("Vector(%s, %s, %s), Vector(%s, %s, %s)", min.x, min.y, min.z, max.x, max.y, max.z) )
+				AddNotice( "min, max vectors are copied to the clipboard.", 5 )
+	end)
 
-	function SWEP:SecondaryAttack()
+	netstream.Hook("PosHelper_3", function(data)
+				AddNotice( "the position where you're looking at is copied to the clipboard.", 5 )
+				SetClipboardText( Format("Vector(%s, %s, %s)", data.x, data.y, data.z) )
+	end)
+end
+function SWEP:PrimaryAttack()
+	if IsFirstTimePredicted() then
+		if !self.min then
+			local trace = self.Owner:GetEyeTraceNoCursor()
+			self.min = trace.HitPos
+			self:EmitSound("HL1/fvox/blip.wav")
+			netstream.Start(self.Owner, "PosHelper_1")
+		else
+			local trace = self.Owner:GetEyeTraceNoCursor()
+			local pos = trace.HitPos
+			self:EmitSound("HL1/fvox/blip.wav")
+			netstream.Start(self.Owner, "PosHelper_2", self.min, pos)
+			self.min = nil
+		end
 	end
 end
 
-if CLIENT then
-	function SWEP:PrimaryAttack()
-		if IsFirstTimePredicted() then
-			if !self.min then
-				local trace = LocalPlayer():GetEyeTraceNoCursor()
-				self.min = trace.HitPos
-				self:EmitSound("HL1/fvox/blip.wav")
-				AddNotice( "Click again to get box vector.", 5 )
-			else
-				local trace = LocalPlayer():GetEyeTraceNoCursor()
-				local pos = trace.HitPos
-				self:EmitSound("HL1/fvox/blip.wav")
-				SetClipboardText( Format("Vector(%s, %s, %s), Vector(%s, %s, %s)", self.min.x, self.min.y, self.min.z, pos.x, pos.y, pos.z) )
-				AddNotice( "min, max vectors are copied to the clipboard.", 5 )
-				self.min = nil
-			end
+function SWEP:SecondaryAttack()
+	if IsFirstTimePredicted() then
+		if !self.nextText or self.nextText < CurTime() then
+			local trace = self.Owner:GetEyeTraceNoCursor()
+			local pos = trace.HitPos
+			self:EmitSound("HL1/fvox/blip.wav")
+			netstream.Start(self.Owner, "PosHelper_3", pos)
+			self.nextText = CurTime() + 1
 		end
 	end
-
-	function SWEP:SecondaryAttack()
-		if IsFirstTimePredicted() then
-			if !self.nextText or self.nextText < CurTime() then
-				local trace = LocalPlayer():GetEyeTraceNoCursor()
-				local pos = trace.HitPos
-				AddNotice( "the position where you're looking at is copied to the clipboard.", 5 )
-				self:EmitSound("HL1/fvox/blip.wav")
-				SetClipboardText( Format("Vector(%s, %s, %s)", pos.x, pos.y, pos.z) )
-				self.nextText = CurTime() + 1
-			end
-		end
-		return false
-	end
+	return false
 end

@@ -1,5 +1,5 @@
 if SERVER then
-	local roundtime = 5
+	local roundtime = 120
 
 	AddTriggerEvent("game_round01_relay", "OnTrigger", "hooker,RoundStart,1,0,-1")
 	AddTriggerEvent("game_round01_relay", "OnTrigger", "obj_go,Disable,,0,-1")
@@ -81,7 +81,7 @@ if SERVER then
 
 	local enemies = {}
 		hook.Add("Think", "custom_map", function()
-
+				if (true) then return end
 					for class, data in pairs(zombies) do
 						if #ents.FindByClass(class) > data.max then
 							continue

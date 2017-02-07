@@ -73,9 +73,10 @@ if (SERVER) then
 					if wepdat then
 						if wepdat.Primary then
 							if wepdat.Primary.Ammo ~= "none" then
-								ammolimit = AMMO_LIMITS[wepdat.Primary.Ammo]
+								ammolimit = AMMO_LIMITS[wepdat.Primary.Ammo] or 200
 								plyammo = ent:GetAmmoCount(wepdat.Primary.Ammo)
 								ammoamt = wepdat.Primary.ClipSize or 0
+
 								local giveammo = math.Clamp( ammolimit - plyammo, 0, ammoamt)
 
 								if giveammo > 0 then

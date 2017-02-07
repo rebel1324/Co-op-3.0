@@ -20,7 +20,7 @@ end
 function ENT:SetTarget(target)
 	self.target = target
 	for k, v in pairs(player.GetAll()) do
-		netstream.Start(v, "TurretSetTarget", {self, target})
+		netstream.Start(v, "TurretSetTarget", self, target)
 	end
 end
 
@@ -34,7 +34,15 @@ end
 
 function ENT:CanTarget(ent)
 	if ent:IsNPC() then
-		if ent:GetClass() != 'npc_citizen' and ent:GetClass() != "npc_turret_floor" then
+		if (hook.Add("CanTurretTarget", self, ent) == false) then
+			return false
+		end
+
+		if ent:GetClass() != 'npc_citizen' 
+			and ent:GetClass() != "npc_turret_floor"
+			and ent:GetClass() != "npc_barney"
+			and ent:GetClass() != "npc_alyx"
+		 then
 			return true
 		end
 	end
@@ -89,7 +97,7 @@ end
 
 function ENT:PrimaryAttack()
 	--self:ResetSequence("fire")
-	self:EmitSound("Turret.Single")
+	self:EmitSound("CW_G3A3_FIRE")
 	local at = self:GetAttachment(1)
 
 	local e = EffectData()
@@ -102,7 +110,7 @@ function ENT:PrimaryAttack()
 		Damage = math.random(9,13),
 		Num = 2,
 		Tracer = 2,
-		TracerName = "AR2Tracer",
+		TracerName = "Tracer",
 		Dir = at.Ang:Forward(),
 		Spread = VectorRand()*.05,
 		Src = at.Pos

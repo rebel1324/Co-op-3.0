@@ -610,7 +610,7 @@ if CLIENT then
 			local atpos = vm:GetAttachment( at )
 			local e = EffectData()
 			e:SetOrigin( atpos.Pos )
-			e:SetNormal( atpos.Ang:Up() * 1 )
+			e:SetNormal( atpos.Ang:Forward() * 1 )
 			e:SetScale( self.muzScale or .2 )
 			util.Effect( "muzzleflosh" , e)
 			self:BeLight( atpos.Pos )

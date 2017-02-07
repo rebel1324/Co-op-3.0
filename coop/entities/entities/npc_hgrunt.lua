@@ -1,36 +1,16 @@
+--[[
+
+@NPCClass base(BaseCombine) studio() = npc_hgrunt : "Human Grunt"
+[
+	spawnflags(Flags) =
+	[
+		32 : "Use Leader Model" : 0
+	]
+
+	// No default so it will default to random
+	//	model(studio)  : "Custom Model" : "models/hgrunt1.mdl"
+]
+
+]]
 AddCSLuaFile()
-
-ENT.Type = "anim"
-
-if SERVER then
-	function ENT:Initialize()
-
-		self.npc = ents.Create("npc_combine_s")
-		self.overriden = true
-		timer.Simple(0, function()
-
-			self.npc:SetPos(self:GetPos())
-			self.npc:SetAngles(self:GetAngles())
-			self.npc:Spawn()
-			self.npc:Activate()
-			self.npc:SetHealth(150)
-		end)
-	end
-
-	function ENT:GetPos()
-		return self.npc:GetPos()
-	end
-
-	function ENT:GetAngles()
-		return self.npc:GetAngles()
-	end
-
-	function ENT:Think()
-	end
-
-	function ENT:OnRemove()
-	end
-else
-	function ENT:Draw()
-	end
-end
+ENT.Base = "monster_human_grunt" 

@@ -1,3 +1,54 @@
+--[[
+@NPCClass base(BaseNPC) studio() = npc_defender : "Defender - NPC used for Evasion maps."
+[
+	spawnflags(Flags) =
+	[
+		65536 :  "No Dynamic Light" : 0
+	]
+
+	model(studio) : "Custom Model" : "models/combine_scanner.mdl"
+	spotlightlength(integer) : "SpotlightLength" : 500
+	spotlightwidth(integer) : "SpotlightWidth" : 50
+
+	spotlightdisabled(choices) : "SpotlightDisabled" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	ShouldInspect(choices) : "Should inspect" : 1 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	OnlyInspectPlayers(choices) : "Only Inspect Players" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	NeverInspectPlayers(choices) : "Never Inspect Players" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	gibmodel0(studio) : "Gib Model 1" : : "Custom gib model.  Leave blank for default gib."
+	gibmodel1(studio) : "Gib Model 2" : : "Custom gib model.  Leave blank for default gib."
+	gibmodel2(studio) : "Gib Model 3" : : "Custom gib model.  Leave blank for default gib."
+	gibmodel3(studio) : "Gib Model 4" : : "Custom gib model.  Leave blank for default gib."
+
+	// Inputs
+	input DisableSpotlight(void) : "DisableSpotlight"
+	input InspectTargetSpotlight(string) : "Tells the scanner to spotlight the given entity, named by classname or by target name. !activator or !player works here also."
+	input InputSetFlightSpeed(integer) : "Sets the flight speed of the scanner"
+	input InputShouldInspect(integer) : "Set whether should inspect or not"
+	input SetFollowTarget(string) : "Set target to follow until told otherwise"
+	input ClearFollowTarget(void) : "Stop following our target"
+	input SetDistanceOverride(float) : "Override the distance the scanner will attempt to keep between inspection targets and itself"
+]]
+
 AddCSLuaFile()
 
 ENT.Type = "anim"

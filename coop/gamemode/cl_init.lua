@@ -12,6 +12,10 @@ include("modules/3dtext.lua")
 include("modules/equipments.lua")
 include("modules/waypoints.lua")
 include("modules/effects.lua")
+include("modules/cw2.lua")
+include("modules/chatbox.lua")
+include("modules/dev.lua")
+include("modules/screen.lua")
 include("derma/infobar.lua")
 include("derma/vendor.lua")
 
@@ -116,12 +120,12 @@ netstream.Hook("oc.Pointmsgs", function(data)
 	oc.pointmsgs = data
 end)
 
-netstream.Hook("oc.WaypointToggle", function(data)
-	if !oc.waypoints[data[1]] then
-		Error('Pointmsg Error: '..data[1]..' Objective Not Found.')
+netstream.Hook("oc.WaypointToggle", function(a, b)
+	if !oc.waypoints[a] then
+		Error('Pointmsg Error: '..a..' Objective Not Found.')
 		return
 	end
-	oc.waypoints[data[1]].curobj = data[2]
+	oc.waypoints[a].curobj = b
 end)
 
 netstream.Hook("oc.PointmsgToggle", function(data)
@@ -132,21 +136,19 @@ netstream.Hook("oc.PointmsgToggle", function(data)
 	oc.pointmsgs[data].nodisp = true
 end)
 
-netstream.Hook("SendNotify", function(data)
-	AddNotice( data[1], data[2] )
+netstream.Hook("SendNotify", function(a, b)
+	AddNotice(a, b)
 end)
 
-netstream.Hook("SendObjective", function(data)
-	DisplayObjective( data[1], data[2] )
+netstream.Hook("SendObjective", function(a, b)
+	DisplayObjective(a, b)
 end)
 
 netstream.Hook("SendPlaySound", function(data)
 	surface.PlaySound(data)
 end)
 
-netstream.Hook("MedicStationDisable", function(data)
-	local ent, disable = data[1], data[2]
-	
+netstream.Hook("MedicStationDisable", function(ent, disable)	
 	ent.disable = disable
 end)
 
@@ -161,6 +163,7 @@ end)
 
 function CL_FT()
 	return math.Clamp(FrameTime(), 1/(60*4), 1)
+	--return curTime * 10
 end
 
 function AddNotice( str, t )
@@ -228,6 +231,8 @@ local icons = {
 
 local function checkpointdisplay(ply)
 	for k, v in pairs(oc.waypoints) do
+		if (!v.origin) then continue end
+		
 		local sx, sy, visible = v.origin:ToScreen().x, v.origin:ToScreen().y,  v.origin:ToScreen().visible
 		sx = math_clamp(sx, h*.1, w - h*.1)
 		sy = math_clamp(sy, h*.1, h - h*.1)
@@ -254,10 +259,13 @@ end
 
 local function pointmsgdisplay(ply)
 	for k, v in pairs(oc.pointmsgs) do
-		local sx, sy, visible = v.origin:ToScreen().x, v.origin:ToScreen().y,  v.origin:ToScreen().visible
+		if (!v.origin) then continue end
+		--print(v.origin[2], v.origin[2].SetNetworkedEntity and v.origin[2]:SetNetworkedEntity("textparent"))
+		local origin = (v.origin[2] and v.origin[2]:IsValid()) and v.origin[2]:GetPos() or v.origin[1]
+		local sx, sy, visible = origin:ToScreen().x, origin:ToScreen().y,  origin:ToScreen().visible
 		if visible and !v.nodisp then
 			local col = v.textcolor or Color(255, 255, 255)
-			col.a = math_clamp(v.radius + 255 - ply:GetPos():Distance(v.origin), 0, 255)
+			col.a = math_clamp(v.radius + 255 - ply:GetPos():Distance(origin), 0, 255)
 
 			surface.SetFont("PointmsgFont")
 			surface.SetTextColor(col)
@@ -281,7 +289,7 @@ local oldhealth = 0
 local oldmoney = 0
 local moneytimer = CurTime()
 local ticktimer = CurTime()
-local moneypos = -20
+local moneypos = ScrW()
 local moneyalpha = 0
 local tarhcol = {255, 255, 255}
 local curhcol = {255, 255, 255}
@@ -344,8 +352,8 @@ local function playerhud(ply)
 				moneytimer = CurTime() + 3
 				
 				if ticktimer < CurTime() then
-					surface.PlaySound("common/talk.wav")
-					ticktimer = CurTime() + .05
+					surface.PlaySound("UI/buttonclick.wav")
+					ticktimer = CurTime() + .1
 				end
 				
 			end
@@ -355,14 +363,15 @@ local function playerhud(ply)
 			local tw, th = surface.GetTextSize(oldmoney .. "$")
 
 			if moneytimer > CurTime() then
-				moneypos = Lerp(CL_FT()*2, moneypos, w*.02)
+				moneypos = Lerp(CL_FT()*2, moneypos, w - 30 - tw)
 				moneyalpha = Lerp(CL_FT()*3, moneyalpha, 255)
 			else
 				moneyalpha = Lerp(CL_FT()*3, moneyalpha, 0)
-				moneypos = Lerp(CL_FT()*3, moneypos, -tw)
+				moneypos = Lerp(CL_FT()*3, moneypos, w + tw)
 			end
 
-			oldmoney = math.ceil(math.Approach(oldmoney, ply:GetMoney() or 0, math.Clamp( CL_FT()*ply:GetMoney()/5, 10, math.huge )))
+			--oldmoney = math.ceil(math.Approach(oldmoney, ply:GetMoney() or 0, math.Clamp( CL_FT()*ply:GetMoney()/5, 10, math.huge )))
+			oldmoney = math.ceil(math.min(ply:GetMoney(), oldmoney + FrameTime()*50))
 
 			surface.SetTextColor(Color(255, 255, 255, moneyalpha))
 			surface.SetTextPos(math_round(moneypos), math_round(h/2-th/2))
@@ -375,9 +384,10 @@ local function playerhud(ply)
 		if wep:GetPrimaryAmmoType() ~= -1 then
 			local ammo = wep:Clip1()
 			if ammo > -1 then
-				local reserves = ply:GetAmmoCount(wep:GetPrimaryAmmoType())
+				local reserves = ply:GetAmmoCount((wep.Primary and AMMO_CONV[wep.Primary.Ammo]) or wep:GetPrimaryAmmoType()) 
 				surface.SetFont("SubFont")
 				surface.SetTextColor(Color(255, 255, 255, 255))
+
 				local tw2, th2 = surface.GetTextSize(reserves)
 				surface.SetTextPos(math_round(w - w*.02-tw2*1.2), math_round(h-th2*1.4))
 				surface.DrawText(reserves)
@@ -402,7 +412,7 @@ local function playerhud(ply)
 	local pos = t.HitPos:ToScreen()
 	local col = { color_black, color_white }
 
-	if !wep.dt or wep.KeepCrosshair or !wep.dt.Aiming then
+	if !wep.dt or wep.KeepCrosshair or wep.dt.State != CW_AIMING then
 		drawdot( {pos.x, pos.y},4, col )
 		drawdot( {pos.x + gap, pos.y},4, col )
 		drawdot( {pos.x - gap, pos.y},4, col ) 
@@ -500,8 +510,16 @@ function PushTimer(time, title)
 	end
 end
 
-netstream.Hook("PushTimer", function(data)
-	PushTimer( data[1], data[2] )
+function PauseTime()
+
+end
+
+function ResumeTime()
+
+end
+
+netstream.Hook("PushTimer", function(a, b)
+	PushTimer(a, b)
 end)
 
 netstream.Hook("StopTimer", function(data)
@@ -607,9 +625,7 @@ local screenalpha = 0
 local screencol = {255,255,255}
 local fadespeed = 3
 
-netstream.Hook("PushFlash", function(data)
-	local alpha, sccolor, fs = data[1], data[2], data[3]
-
+netstream.Hook("PushFlash", function(alpha, sccolor, fs)
 	if alpha and sccolor then
 		screenalpha = 255
 		screencol[1] = sccolor.r; screencol[2] = sccolor.g; screencol[3] = sccolor.b;
@@ -643,8 +659,12 @@ function GM:HUDAmmoPickedUp( name, amount )
 	AddNotice( Format(lang.ammopickup, amount, name), 2.5 )
 end
 
-function GM:HUDWeaponPickedUp()
+function GM:HUDWeaponPickedUp( wep )
+	if (wep and wep:IsValid() and wep.PrintName != nil) then
+		AddNotice( Format(lang.weaponpickup, wep.PrintName), 2.5 )
+	end
 end
+
 
 function GM:HUDPaint()
 	local ply = LocalPlayer()
@@ -659,3 +679,18 @@ function GM:HUDPaint()
 	screenflash()
 	drawtimer()
 end
+
+hook.Add("UpdateAnimation", "NameTags", function(pl)
+	local light = pl:GetNetworkedBool("light", false)
+	if (light) then
+		local firepos = pl:EyePos() + pl:GetAimVector() * -5
+
+		local dlight = DynamicLight(pl:EntIndex())
+		dlight.Pos = firepos
+		dlight.r, dlight.g, dlight.b = 255, 255, 255
+		dlight.Brightness = 1
+		dlight.Size = (512 + math.sin( CurTime()*FrameTime()/2 )*10)
+		dlight.Decay = 1024
+		dlight.DieTime = CurTime() + 0.1
+	end
+end)	

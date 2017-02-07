@@ -11,6 +11,10 @@ AddCSLuaFile("modules/3dtext.lua")
 AddCSLuaFile("modules/equipments.lua")
 AddCSLuaFile("modules/waypoints.lua")
 AddCSLuaFile("modules/effects.lua")
+AddCSLuaFile("modules/cw2.lua")
+AddCSLuaFile("modules/chatbox.lua")
+AddCSLuaFile("modules/dev.lua")
+AddCSLuaFile("modules/screen.lua")
 AddCSLuaFile("derma/icon.lua")
 AddCSLuaFile("derma/infobar.lua")
 AddCSLuaFile("derma/vendor.lua")
@@ -32,13 +36,25 @@ include("modules/equipments.lua")
 include("modules/waypoints.lua")
 include("modules/playerclip.lua")
 include("modules/aipointhelper.lua")
+include("modules/cw2.lua")
+include("modules/dev.lua")
+include("modules/modparser.lua")
 include("shared.lua")
 include("player.lua")
 
-resource.AddWorkshop(236015482)
---resource.AddWorkshop(222087837)
-resource.AddWorkshop(122448639)
+-- CUSTOMIZABLE WEAPONRY 2.0
+resource.AddWorkshop(349050451)
+resource.AddWorkshop(358608166)
+
+-- PLAYER MODELS
+resource.AddWorkshop(636790055)
+-- CO-OP CONTENTS
 resource.AddWorkshop(241429623)
+
+-- HL:Renaissance
+resource.AddWorkshop(125988781)
+-- COMBINE ASSASIN
+resource.AddWorkshop(108511284)
 
 local nextqueue = 0
 local msgqueue = {}
@@ -49,25 +65,25 @@ end
 
 function SendNotify(player, str, time)
 	local t = time or 2
-	netstream.Start(player, "SendNotify", {str, t})
+	netstream.Start(player, "SendNotify", str, t)
 end
 
 function ScreenFlash(player, alpha, color, speed)
-	netstream.Start(player, "PushFlash", {alpha, color, speed})
+	netstream.Start(player, "PushFlash", alpha, color, speed)
 end
 
 function SendObjective(player, str, time)
 	local t = time or 3
-	netstream.Start(player, "SendObjective", {str, t})
+	netstream.Start(player, "SendObjective", str, t)
 end
 
 function PlayBackgroundSound(player, str)
-	netstream.Start(player, "SendPlaySound", {str})
+	netstream.Start(player, "SendPlaySound", str)
 end
 
 function PushTimer(object, time, title)
 	for k, v in pairs(player.GetAll()) do
-		netstream.Start(v, "PushTimer", {time, title})
+		netstream.Start(v, "PushTimer", time, title)
 	end
 end
 
@@ -78,6 +94,8 @@ function StopTimer()
 end
 
 function RequestPurchase(ent, input, activator, called, data)
+	if (input == "SetPurchaseCost") then return end
+
 	if hook.Call("CanMapPurchase", GAMEMODE, ent, input, activator, called, data) == false then
 		return false
 	end
@@ -219,6 +237,7 @@ end
 
 function GM:PlayerDeath(victim, attacker, inflictor)
 	victim.timeDeath = CurTime() + 3
+
 	if attacker:IsPlayer() and victim ~= attacker then
 		for k, v in pairs(player.GetAll()) do
 			SendNotify(v, Format(lang.teamkilled, attacker:Name(), victim:Name()), 5)
@@ -250,7 +269,6 @@ function GM:ScaleNPCDamage( npc, hitgroup, dmginfo )
 end
 
 function GM:ScalePlayerDamage( ply, hitgroup, dmginfo )
-	// More damage when we're shot in the head
 	local damage = 1
 	if ( hitgroup == HITGROUP_HEAD ) then
 		damage = 2
@@ -279,6 +297,7 @@ function GM:CanPlayerSuicide(ply)
 end
 
 function GM:PlayerInitialSpawn( ply )
+	firstinit = false
 	netstream.Start(ply, "oc.Waypoints", oc.waypoints)
 	netstream.Start(ply, "oc.Pointmsgs", oc.pointmsgs)
 	
@@ -286,11 +305,8 @@ function GM:PlayerInitialSpawn( ply )
 	ply.lives = DEFAULT_LIVES
 end
 
-function GM:PlayerSpawn(ply)
+function GM:PlayerLoadout(ply)
 	if ply:Team() == TEAM_ALIVE then
-		ply:SetModel(Format("models/player/group01/male_0%d.mdl", math.random(1,9)))
-		ply:SetSkin(math.random(1,20))
-
 		ply:SetNoTarget(false)
 		ply:UnSpectate()
 		ply:StripWeapons()
@@ -304,6 +320,11 @@ function GM:PlayerSpawn(ply)
 		ply:Spectate(OBS_MODE_ROAMING)
 		ply:SetNoTarget(true)
 	end
+end
+
+function GM:PlayerSetModel(ply)
+		ply:SetModel(Format("models/player/group01/male_0%d.mdl", math.random(1,9)))
+		ply:SetSkin(math.random(1,20))
 end
 
 function GM:PlayerAuthed( ply, steamID, uniqueID )
@@ -320,9 +341,12 @@ function ResetMap()
 	netstream.Start(player.GetAll(), "ClearClientTables")	
 
 	game.CleanUpMap()
-	hook.Call("InitPostEntity", GAMEMODE)
-	hook.Call("PostRoundLose", GAMEMODE)
+	hook.Run("InitPostEntity")
+	hook.Run("PostRoundLose")
 	print('Server is hybernated, Clearing current game progress.')
+end
+
+function GM:PostCleanupMap()
 end
 
 GAME_LOST = false
@@ -330,8 +354,8 @@ function GM:Think()
 	messagequeue()
 
 	if #player.GetAll() == 0 then
-		if !hybernated then
-			ResetMap()
+		if !hybernated and !firstinit then
+			--ResetMap()
 
 			hybernated = true
 		end
@@ -383,7 +407,7 @@ function EntSaveTable( class )
 	file.CreateDir("coop")
 	file.CreateDir("coop/maps")
 	file.CreateDir("coop/maps/"..map)
-	local encoded = von.serialize(tbl)
+	local encoded = pon.encode(tbl)
 
 	file.Write("coop/maps/"..map.."/"..class..".txt", encoded)
 end
@@ -399,7 +423,7 @@ function EntLoadTable( class )
 	end
 
 	if contents then
-		decoded = von.deserialize(contents)
+		decoded = pon.decode(contents)
 	end
 
 	if decoded then
@@ -425,5 +449,101 @@ function GM:InitPostEntity()
 		else
 			continue
 		end
+	end
+end
+
+
+function GM:PlayerSelectSpawn( pl )
+	local spawnPoint = hook.Run("MapSpawnPoint", pl)
+	if (spawnPoint) then
+		return spawnPoint
+	end 
+
+	if (!IsTableOfEntitiesValid( self.SpawnPoints )) then
+	
+		self.LastSpawnPoint = 0
+		self.SpawnPoints = ents.FindByClass( "info_player_start" )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_deathmatch" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_combine" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_rebel" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_counterterrorist" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_terrorist" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_axis" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_allies" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "gmod_player_start" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_teamspawn" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "ins_spawnpoint" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "aoc_spawnpoint" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "dys_spawn_point" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_pirate" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_viking" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_knight" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "diprip_start_team_blue" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "diprip_start_team_red" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_red" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_blue" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_coop" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_human" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombie" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombiemaster" ) )
+	end
+	
+	local Count = table.Count( self.SpawnPoints )
+	
+	if ( Count == 0 ) then
+		Msg("[PlayerSelectSpawn] Error! No spawn points!\n")
+		return nil
+	end
+
+	for k, v in pairs(self.SpawnPoints) do
+		if ( v:HasSpawnFlags(1) && hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, v, true ) ) then
+			return v
+		end
+	end
+	
+	local ChosenSpawnPoint = nil
+	
+	for i = 1, Count do
+		ChosenSpawnPoint = table.Random( self.SpawnPoints )
+
+		if ( IsValid( ChosenSpawnPoint ) && ChosenSpawnPoint:IsInWorld() ) then
+			if ( ( ChosenSpawnPoint == pl:GetVar( "LastSpawnpoint" ) || ChosenSpawnPoint == self.LastSpawnPoint ) && Count > 1 ) then continue end
+			
+			if ( hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ChosenSpawnPoint, i == Count ) ) then
+				self.LastSpawnPoint = ChosenSpawnPoint
+				pl:SetVar( "LastSpawnpoint", ChosenSpawnPoint )
+				return ChosenSpawnPoint
+			end
+		end
+	end
+	
+	return ChosenSpawnPoint
+end
+
+function GM:WeaponEquip(weapon)
+	if (REPLACE_ENTITIES[weapon:GetClass()]) then
+		local weaponTable = REPLACE_ENTITIES[weapon:GetClass()]
+
+		timer.Simple(0.1, function()
+			local owner = weapon.Owner
+
+			if (owner and owner:IsValid()) then
+				local class = table.Random(weaponTable)
+
+				if (owner:HasWeapon(class)) then
+					owner:GiveAmmo(10, weapon:GetPrimaryAmmoType(), false)
+				else
+					owner:Give(class)
+				end
+
+				weapon:Remove()
+			end
+		end)
+	end
+end
+
+function GM:AcceptInput(entity, input, activator, caller, value )
+	if (input:find("spawn")) then
+		print(entity, input)
 	end
 end

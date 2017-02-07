@@ -8,7 +8,7 @@ function playerMeta:GiveMoney(amount)
 			self.money = amount
 		end
 
-		netstream.Start(self, "SyncMoney", {self.money, amount})
+		netstream.Start(self, "SyncMoney", self.money, amount)
 
 		hook.Call("OnGiveMoney", GAMEMODE, self, self.money, amount )
 	end
@@ -52,9 +52,9 @@ if (SERVER) then
 	hook.Add("PlayerDisconnected", "money.save", function(player) player:SaveMoney() end)
 	hook.Add("PlayerAuthed", "money.load", function(player) player:LoadMoney() end)
 else
-	netstream.Hook("SyncMoney", function(data)
-		LocalPlayer().money = data[1]
+	netstream.Hook("SyncMoney", function(money, amount)
+		LocalPlayer().money = money
 
-		hook.Call("OnGiveMoney", GAMEMODE, LocalPlayer(), data[1], data[2] )
+		hook.Call("OnGiveMoney", GAMEMODE, LocalPlayer(), money, amount)
 	end)
 end

@@ -13,6 +13,8 @@ SWEP.Category = "Co-op"
 SWEP.Spawnable			= true
 SWEP.AdminSpawnable		= true
 
+SWEP.UseHands = true
+
 SWEP.ViewModel = "models/weapons/c_grenade.mdl"
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 
@@ -63,6 +65,7 @@ if SERVER then
 				self:EmitSound("weapons/slam/throw.wav")
 
 				local e = ents.Create("coop_healthvial")
+				e:SetModel("models/healthvial.mdl")
 				e:SetPos(self.Owner:GetPos() + self.Owner:OBBCenter() + self.Owner:GetForward()*25)
 				e:SetAngles(AngleRand())
 				e:Spawn()

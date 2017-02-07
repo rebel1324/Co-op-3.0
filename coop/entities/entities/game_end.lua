@@ -16,7 +16,7 @@ function ENT:OnRemove()
 end
 
 function ENT:AcceptInput( inputName, activator, called, data )
-	RunConsoleCommand("changelevel", table.Random(MAP_CYCLE))
+	--RunConsoleCommand("changelevel", table.Random(MAP_CYCLE))
 	--RunConsoleCommand("changelevel", "oc_antlion_attack_01")
 end
 

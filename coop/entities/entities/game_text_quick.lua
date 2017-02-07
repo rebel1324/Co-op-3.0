@@ -1,11 +1,16 @@
-
+--[[
+@PointClass base(game_text) iconsprite("editor/game_text.vmt") = game_text_quick : "An entity that displays customized text on player's screens."
+[
+	// Inputs
+	input DisplayText(string) : "Display this message text."
+]
+]]
 ENT.Type = "point"
 
 function ENT:Initialize()
 end
 
 function ENT:KeyValue( key, value )
-	--print(self:GetClass(), key, value)
 end
 
 function ENT:Think()

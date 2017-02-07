@@ -59,7 +59,7 @@ else
 		file.CreateDir("coop")
 		file.CreateDir("coop/maps")
 		file.CreateDir("coop/maps/"..map)
-		local encoded = von.serialize(texttable)
+		local encoded = pon.encode(texttable)
 
 		file.Write("coop/maps/"..map.."/maptexts.txt", encoded)
 	end
@@ -75,7 +75,7 @@ else
 		end
 
 		if contents then
-			decoded = von.deserialize(contents)
+			decoded = pon.decode(contents)
 		end
 
 		if decoded then
@@ -85,9 +85,7 @@ else
 
 	hook.Add("InitPostEntity", "3dtext.load", LoadMapTexts)
 
-	netstream.Hook("MapTextUpdateRequest", function(ply, data)
-		local delete, index, text = data[1], data[2], data[3]
-
+	netstream.Hook("MapTextUpdateRequest", function(ply, delete, index, text)
 		if 1 or ply:IsAdmin() then -- only admin can auth fucking text.
 			if delete then
 				table.remove(texttable, index)
@@ -101,9 +99,7 @@ else
 		end
 	end)
 
-	netstream.Hook("MapTextRequest", function(ply, data)
-		local text, pos, ang, scale = data[1], data[2], data[3], data[4]
-
+	netstream.Hook("MapTextRequest", function(ply, text, pos, ang, scale)
 		if 1 or ply:IsAdmin() then -- only admin can auth fucking text.
 			MapTextAdd(text, pos, ang, scale)
 

@@ -7,7 +7,7 @@ ENT.Base = "coop_ammo"
 ENT.type = "357"
 ENT.amount = 15
 ENT.max = 50
-ENT.Model = Model("models/bloocobalt/l4d/items/w_eq_fieldkit.mdl")
+ENT.Model = "models/Items/BoxMRounds.mdl"
 ENT.skin = 1
 
 function ENT:Touch(ent)

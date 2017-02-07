@@ -1,6 +1,4 @@
-if SERVER then
-	resource.AddWorkshop(239279433)
-end
+-- THIS WORKING PERFECT
 
 AddSpawn(Vector(430.048157, 3288.840088, -943.088318))
 AddSpawn(Vector(414.393799, 3142.809326, -943.088318))
@@ -198,7 +196,6 @@ if SERVER then
 
 						rsevent = true
 
-						print(mapgo.med, mapgo.start)
 						mapgo.med:Fire("Use", "", .5)
 						mapgo.start:Fire("Use", "", 3)
 					end
@@ -212,6 +209,14 @@ if SERVER then
 				for k, v in ipairs(player.GetAll()) do
 					v:Spawn()
 					SendObjective(v, "Game is Dropped.", 5)
+				end
+			else
+				if !nextCall or nextCall < CurTime() then
+					for k, v in ipairs(player.GetAll()) do
+						SendObjective(v, "WAITING FOR OTHER PLAYERS", 5)
+					end
+
+					nextCall = CurTime() + 6
 				end
 			end
 		end

@@ -11,20 +11,25 @@ function EFFECT:Init( data )
    		local at = self.Entity:GetAttachment(1)
 		self.Entity.emit = self.Entity.emit or ParticleEmitter( at.Pos )
 
-		for i=0,3 do
+			
+		if at then
+			ParticleEffectAttach("muzzleflash_pistol_deagle", PATTACH_POINT_FOLLOW, self.Entity, 1)
+		end
+
+		for i=0,2 do
 			local Smoke = self.Entity.emit:Add("particle/smokesprites_000"..math.random(1,9), at.Pos )
 			Smoke:SetVelocity(120*i*1.5*at.Ang:Forward()*(self.Scale*1.5))
-			Smoke:SetDieTime(math.Rand(0.5,1.9))
+			Smoke:SetDieTime(math.Rand(0.3,1))
 			Smoke:SetStartAlpha(math.Rand(11,33))
 			Smoke:SetEndAlpha(0)
-			Smoke:SetStartSize(math.random(20,30)*self.Scale)
+			Smoke:SetStartSize(math.random(33,44)*self.Scale)
 			Smoke:SetEndSize(math.random(40,55)*self.Scale*i)
 			Smoke:SetRoll(math.Rand(180,480))
 			Smoke:SetRollDelta(math.Rand(-3,3))
 			Smoke:SetColor(255,255,255)
 			Smoke:SetLighting(true)
 			Smoke:SetGravity( Vector( 0, 0, 100 )*math.Rand( .2, 1 ) )
-			Smoke:SetAirResistance(501)
+			Smoke:SetAirResistance(250)
 		end
 
 		local aang = at.Ang:Forward():Angle()
@@ -71,11 +76,7 @@ end
 
 effects.Register( EFFECT, "TurretMuzzle" )
 
-netstream.Hook("TurretSetTarget", function(data)
-	local ent = data[1]
-	local target = data[2]
-	print(1)
-	
+netstream.Hook("TurretSetTarget", function(ent, target)	
 	if ent and ent:IsValid() and target and target:IsValid() then
 		ent.engageReady = CurTime() + ent.PrepareTime
 	end
@@ -128,7 +129,7 @@ function ENT:Think()
 			smoke:SetDieTime(math.Rand(1,2))
 			smoke:SetStartAlpha(math.Rand(88,211))
 			smoke:SetEndAlpha(0)
-			smoke:SetStartSize(math.random(11,15))
+			smoke:SetStartSize(math.random(22,15))
 			smoke:SetEndSize(math.random(40,55))
 			smoke:SetRoll(math.Rand(180,480))
 			smoke:SetRollDelta(math.Rand(-3,3))

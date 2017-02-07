@@ -1,3 +1,4 @@
+ENT.base = "base_brush"
 ENT.Type = "brush"
 
 function ENT:Initialize()

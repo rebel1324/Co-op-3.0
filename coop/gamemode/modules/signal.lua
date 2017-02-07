@@ -123,7 +123,7 @@ if (CLIENT) then
 		end
 
 		local trace = LocalPlayer():GetEyeTraceNoCursor()
-		netstream.Start("RequestSignal", {selected, trace})
+		netstream.Start("RequestSignal", selected, {HitPos = trace.HitPos, HitNormal = trace.HitNormal})
 		surface.PlaySound("common/wpn_hudoff.wav")
 
 		gui.EnableScreenClicker(signal.open)
@@ -230,34 +230,27 @@ if (CLIENT) then
 
 	end
 
-	netstream.Hook("SignalSend", function(data)
-		local trace = data[3]
-		if !trace.HitSky then
-			local pos = trace.HitPos
-			table.insert(signal.queue, {origin = pos, text = signal.list[data[2]].name or 'Test', image = signal.list[data[2]].image or 3, alpha = 0, time = CurTime() + 5})
-		end
+	netstream.Hook("SignalSend", function(requested, selected, trace)
+		local pos = trace.HitPos
+		table.insert(signal.queue, {origin = pos, text = signal.list[selected].name or 'Test', image = signal.list[selected].image or 3, alpha = 0, time = CurTime() + 5})
 	end)
-
-	hook.Add("HUDPaint", "signal.draw", signal.draw )
-	hook.Add("OnContextMenuOpen", "signal.hook", signal.opensignal )
-	hook.Add("OnContextMenuClose", "signal.hook", signal.closesignal )
 else
-	netstream.Hook("RequestSignal", function(ply, data)
-		if !ply.nextSignal or ply.nextSignal < CurTime() then
-			local linedata = table.Random(signal.list[data[1]].lines)
-			ply:ConCommand(Format("say %s", linedata[1]))
-			ply:EmitSound(Format("vo/npc/%s01/%s.wav", "male", linedata[2]), 100, math.random(90,110))
+	netstream.Hook("RequestSignal", function(client, selected, trace)
+		if !client.nextSignal or client.nextSignal < CurTime() then
+			local linedata = table.Random(signal.list[selected].lines)
+			client:ConCommand(Format("say %s", linedata[1]))
+			client:EmitSound(Format("vo/npc/%s01/%s.wav", "male", linedata[2]), 100, math.random(90,110))
 
-			if signal.list[data[1]].mark then
-				netstream.Start(player.GetAll(), "SignalSend", {ply, data[1], data[2]})
+			if signal.list[selected].mark then
+				netstream.Start(player.GetAll(), "SignalSend", client, selected, trace)
 			end
 
-			ply.nextSignal = CurTime() + 1
-			ply.warned = false
+			client.nextSignal = CurTime() + 1
+			client.warned = false
 		else
-			if !ply.warned then
-				SendNotify(ply, lang.nextsignal, 2)
-				ply.warned = true
+			if !client.warned then
+				SendNotify(client, lang.nextsignal, 2)
+				client.warned = true
 			end
 		end
 	end)

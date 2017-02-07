@@ -15,6 +15,7 @@ function ENT:OnRemove()
 end
 
 function ENT:AcceptInput( inputName, activator, called, data )
+	print(inputName, activator, called, data )
 	if inputName == "DisplayText" then
 		for k, v in pairs(player.GetAll()) do
 			v:ChatPrint(data)

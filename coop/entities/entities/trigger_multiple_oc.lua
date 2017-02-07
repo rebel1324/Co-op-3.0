@@ -1,3 +1,21 @@
+--[[
+
+@SolidClass base(Trigger) = trigger_multiple_oc : "A trigger volume that can be triggered multiple times."
+[
+	wait(integer) : "Delay Before Reset" : 1 : "Amount of time, in seconds, after the trigger_multiple has triggered before it can be triggered again. If set to -1, it will never trigger again (in which case you should just use a trigger_once)."
+
+	// Inputs
+	input TouchTest(void) : "Tests if the trigger is being touched and fires an output based on whether the value is true or false."
+
+	// Outputs
+	output OnTrigger(void) : "Fired whenever the trigger is activated."
+	output OnTouching(void) : "Fired when the TestTouch input is true (something is touching the trigger.)"
+	output OnNotTouching(void) : "Fired when the TestTouch input is not true (nothing is touching the trigger.)"
+]
+
+]]
+
+ENT.base = "base_brush"
 ENT.Type = "brush"
 
 function ENT:Initialize()
@@ -15,6 +33,12 @@ function ENT:KeyValue( key, value )
 
 		local tbl = string.Explode(',', value)
 		table.insert(self.trigger, tbl)
+	elseif key == "OnNotTouching" then
+		print("wha...")
+		self.notTouch = self.notTouch or {}
+
+		local tbl = string.Explode(',', value)
+		table.insert(self.notTouch, tbl)
 	else
 		--print(self:GetClass(), key, value)
 	end

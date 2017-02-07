@@ -112,13 +112,13 @@ if SERVER then
 	}
 
 	EQUIPMENTS_EFFECTS["act_rocketbarrage"] = {
-		cooldown = 120,
+		cooldown = 1,
 		onused = function(ply)
 			local class = "rpg_missile"
 
-			for i = 1, 5 do
+			for i = 1, 8 do
 				if !ply:Alive() then break end
-				--timer.Simple( math.Rand(.06, .1)*i, function()
+				timer.Simple( .1*i, function()
 					local rocket = ents.Create(class)
 					rocket:SetPos(ply:GetShootPos() + ply:GetAimVector() * 30 + ply:GetAimVector():Angle():Right()*10)
 					rocket:SetAngles(ply:GetAimVector():Angle())
@@ -126,12 +126,12 @@ if SERVER then
 					rocket.rnd = true
 					rocket.rndtime = CurTime() + .1
 					rocket.wtf = CurTime() + 2
-					rocket:SetSaveValue( "m_flDamage", 75 )
+					rocket:SetSaveValue( "m_flDamage", 150 )
 					rocket:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 					rocket:SetVelocity(Vector(0,0,80) + ply:GetAimVector() * 500)
 					rocket:SetOwner(ply)
-					ply:EmitSound("Weapon_SMG1.Double", 100, math.random(100,150))
-				--end)
+					ply:EmitSound("Weapon_SMG1.Double", 100, math.random(100,111))
+				end)
 			end
 
 		end,
@@ -146,7 +146,7 @@ if SERVER then
 	hook.Add("Think", "eq.rocket", function()
 		for k, v in ipairs( ents.FindByClass("rpg_missile") ) do
 			if v.rnd and v.rndtime < CurTime() then
-				v:SetVelocity(v:GetForward()*-5+v:GetRight()*math.Rand(-60,60)+v:GetUp()*math.Rand(-60,60))
+				v:SetVelocity(v:GetForward()*-5+v:GetRight()*math.Rand(-22,22)+v:GetUp()*math.Rand(-11,11))
 			end
 		end
 	end)

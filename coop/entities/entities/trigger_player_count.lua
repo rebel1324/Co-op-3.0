@@ -1,3 +1,34 @@
+--[[
+@SolidClass base(Trigger, Angles) = trigger_player_count : "A volumetric trigger that Counts Players"
+[
+	VolumeName(string) : "Name of Volume"
+	ConstantAnnounce(choices) : "Constantly Announce" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	// Inputs
+	input SetReceiver(void) : "Sets the Receiver of Messages."
+	input NullReceiver(void) : "Receiver will no longer receive messages from this trigger."
+	input CountPlayers(void) : "Counts the Players in the volume and tells everyone the amount."
+	input CountPlayersToActivator(void) : "Counts the Players in the volume and tells the activator the amount."
+
+	// Outputs
+	output OnPlayerEntered(void) : "On Player Entered Volume"
+	output OnRedPlayerEntered(void) : "On Red Player Entered Volume"
+	output OnBluePlayerEntered(void) : "On Blue Player Entered Volume"
+
+	output OnPlayerLeave(void) : "On Player Leave Volume"
+	output OnRedPlayerLeave(void) : "On Red Player Leave Volume"
+	output OnBluePlayerLeave(void) : "On Blue Player Leave Volume"
+
+	output OnAllPlayersEntered(void) : "On All Server Players Enter"
+	output OnAllRedPlayersEntered(void) : "On All Red Team Players Enter"
+	output OnAllBluePlayersEntered(void) : "On All Blue Team Players Enter"
+]
+]]
+ENT.base = "base_brush"
 ENT.Type = "brush"
 
 function ENT:Initialize()
@@ -16,7 +47,7 @@ function ENT:KeyValue( key, value )
 		table.insert(self.trigger, tbl)
 	elseif key == "OnPlayerEntered" then
 		self.entered = self.entered or {}
-		print(key, value)
+		
 		local tbl = string.Explode(',', value)
 		table.insert(self.entered, tbl)
 	elseif key == "OnPlayerLeave" then

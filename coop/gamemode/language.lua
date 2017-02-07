@@ -12,6 +12,7 @@ lang.gameend_lost = "Players lost this round."
 lang.teamkilled = "%s teamkilled %s!"
 lang.nextsignal = "Please wait another second to do next signal action."
 lang.ammopickup = "Picked up %s %s Ammo."
+lang.weaponpickup = "Picked up %s"
 lang.earnpoint = "Picked up %s"..lang.currency.."."
 lang.ply_join = "%s joined to the game."
 

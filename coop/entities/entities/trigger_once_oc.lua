@@ -1,3 +1,15 @@
+--[[
+
+
+@SolidClass base(TriggerOnce) = trigger_once_oc : "A trigger volume that removes itself after it is triggered once."
+[
+	// Outputs
+	output OnTrigger(void) : "Fired whenever the trigger is activated."
+]
+
+
+]]
+ENT.base = "base_brush"
 ENT.Type = "brush"
 
 function ENT:Initialize()

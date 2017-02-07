@@ -22,8 +22,10 @@ hook.Add("InitPostEntity", "triggers", function()
 
 	for k, v in pairs(ents.GetAll()) do
 		if v:IsNPC() and v:GetName() != "" then
-			print(v, v:GetName())
+			-- woow
+			--print(v, v:GetName())
 		end
+
 		if v:GetName() and v:GetName() != "" and additionalTriggers[v:GetName()] then
 			for _, ipt in ipairs(additionalTriggers[v:GetName()]) do
 				v:SetKeyValue(ipt[1], ipt[2])

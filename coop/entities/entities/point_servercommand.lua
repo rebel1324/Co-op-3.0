@@ -17,7 +17,11 @@ end
 function ENT:AcceptInput( inputName, activator, called, data )
 	if inputName == "Command" then
 		for k, v in pairs(player.GetAll()) do
-			v:ChatPrint(data)
+			if (data:find("sk_")) then
+				print("SERVER CONFIG CHANGED: " .. data)
+				local wow = string.Explode(wow)
+				--RunConsoleCommand(wow[1], wow[2], wow[3])
+			end
 		end
 	end
 end

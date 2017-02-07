@@ -7,7 +7,7 @@ ENT.Base = "coop_ammo"
 ENT.type = "357"
 ENT.amount = 15
 ENT.max = 50
-ENT.Model = Model("models/healthvial.mdl")
+ENT.Model = "models/healthvial.mdl"
 
 function ENT:Touch(ent)
 	if self.taken != true then

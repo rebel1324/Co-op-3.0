@@ -15,5 +15,6 @@ function ENT:OnRemove()
 end
 
 function ENT:AcceptInput( inputName, activator, called, data )
+	print("TELEPORT EFFECT")
 	print(inputName, data)
 end

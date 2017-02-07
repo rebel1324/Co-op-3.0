@@ -25,3 +25,8 @@ function ply:GiveGamemodeWeapons()
 		self:Give(wep)
 	end
 end
+
+function ply:GetHandsModel()
+	local cl_playermodel = self.Player:GetInfo( "cl_playermodel" )
+	return player_manager.TranslatePlayerHands( cl_playermodel )
+end

@@ -63,7 +63,7 @@ end
 if CLIENT then
 	function SWEP:PrimaryAttack()
 		if IsFirstTimePredicted() then
-			netstream.Start("MapTextRequest", {textsample.text, textsample.pos, textsample.angle, textsample.scale})
+			netstream.Start("MapTextRequest", textsample.text, textsample.pos, textsample.angle, textsample.scale)
 		end
 	end
 
@@ -89,12 +89,12 @@ if CLIENT then
 			if (input.IsMouseDown(MOUSE_LEFT)) then
 				local menu = DermaMenu()
 				menu:AddOption( "Delete This Text", function()
-					netstream.Start("MapTextUpdateRequest", {true, line.index})
+					netstream.Start("MapTextUpdateRequest", true, line.index)
 				end):SetImage("icon16/money_add.png")
 				menu:AddOption( "Modify This Text", function()
 					if texttable[line.index] then
 						Derma_StringRequest("Map Text Manager", "Write down the text to change.", texttable[line.index].text, function(text)
-							netstream.Start("MapTextUpdateRequest", {false, line.index, text})
+							netstream.Start("MapTextUpdateRequest", false, line.index, text)
 						end, function() end)
 					end
 				end):SetImage("icon16/money_delete.png")

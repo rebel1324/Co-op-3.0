@@ -1,0 +1,13 @@
+﻿TODO LIST:
+HELICOPTER-GUNSHIP WEAPON DAMAGE
+NPC HEALTH INDICATOR
+WEAPON_HEALER ** create weapon for weapon_healer
+
+custom weapon overhaul
+item_custom
+
+CUSTOM AMMO CRATE -- custom models and shit...
+gotta download custom model for ammo crate.
+
+map random box - 
+

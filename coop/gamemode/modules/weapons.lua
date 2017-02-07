@@ -299,9 +299,7 @@ if CLIENT then
 	 
 	end
 	effects.Register( EFFECT, "cusshell" )
-	
 else
-
 	netstream.Hook("RequestAmmo", function(ply, dat)
 		local scan = ents.FindInSphere(ply:GetPos(), 128)
 		local near = false
@@ -364,29 +362,13 @@ else
 		end
 	end)
 
-	local replaces = {
-		["weapon_smg1"] = {"spy_smg"},
-		["weapon_ar2"] = {"spy_ak47"},
-		["weapon_pistol"] = {"spy_pistol"},
-
-		["item_ammo_357"] = {"ammo_357"},
-		["item_box_buckshot"] = {"ammo_buckshot"},
-		["item_ammo_pistol"] = {"ammo_pistol"},
-		["item_ammo_smg1"] = {"ammo_smg"},
-		["item_ammo_ar2"] = {"ammo_ar2"},
-		["item_box_sniper_rounds"] = {"ammo_sniper"},
-		["item_healthvial"] = {"coop_healthvial"},
-		["item_healthkit"] = {"coop_healthvial"},
-		["item_battery"] = {"coop_healthvial"},
-	}
-
 	function weapon.replace(ent)
 		for k, v in pairs(ents.FindByClass("weapon_*")) do
 			if !REMOVE_ALL_ITEMS then
 				local wepdat = {}
 				local newwep
-				if replaces[v:GetClass()] then
-					newwep = table.Random(replaces[v:GetClass()])
+				if REPLACE_ENTITIES[v:GetClass()] then
+					newwep = table.Random(REPLACE_ENTITIES[v:GetClass()])
 					wepdat = weapons.Get(newwep)
 				end
 
@@ -412,8 +394,8 @@ else
 		for k, v in pairs(ents.FindByClass("item_*")) do
 			if v:GetClass() == "item_suit" then continue end
 
-			if replaces[v:GetClass()] and !REMOVE_ALL_ITEMS then
-				newammo = table.Random(replaces[v:GetClass()])
+			if REPLACE_ENTITIES[v:GetClass()] and !REMOVE_ALL_ITEMS then
+				newammo = table.Random(REPLACE_ENTITIES[v:GetClass()])
 
 				local ent = ents.Create(newammo)
 				ent:SetModel(ent.Model)
@@ -432,5 +414,4 @@ else
 		end
 	end
 	hook.Add("InitPostEntity", "weapon.replace", weapon.replace)
-	
 end

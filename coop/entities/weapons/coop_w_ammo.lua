@@ -13,6 +13,8 @@ SWEP.Category = "Co-op"
 SWEP.Spawnable			= true
 SWEP.AdminSpawnable		= true
 
+SWEP.UseHands = true
+
 SWEP.ViewModel = "models/weapons/c_grenade.mdl"
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 

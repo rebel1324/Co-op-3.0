@@ -1,0 +1,77 @@
+SUPPORTED MAP LIST (OFFICIAL)
+
+OBSIDIAN CONFLICT: -TEAM BASED MAPS ARE NOT SUPPORTED because this is co-op mod-
+
+OVERALL PROBLEM:
+ - few maps are pretty not familar for the user.
+   you need to figure out and thrust your dick at every directions.
+
+oc_antlion_attack_01 (CUSTOMIZED)
+oc_trainride_a (CUSTOMIZED)
+oc_moegladosfactory (CUSTOMIZED - needs test)
+oc_starshop_troopers (CUSTOMIZED - needs test)
+oc_trashstand_v2 (CUSTOMIZED - needs test)
+oc_wgh (ORIGINAL - 100%)
+oc_bunker (ORIGINAL - 100%)
+oc_quest_b2 (ORIGINAL - 100%)
+oc_sso_v1j (ORIGINAL - 100%)
+oc_cannon_1 (ORIGINAL - 100%)
+oc_cannon_2 (ORIGINAL - 100%)
+oc_junkfall_1c (ORIGINAL - 100%)
+oc_r-day (ORIGINAL - 100%)
+oc_d_crimson_v2h (ORIGINAL - 100%) - need guide of the map
+oc_combinebase_alpha1 (ORIGINAL - 85%)
+oc_spelunk01_b (ORIGINAL - 50%)
+oc_spelunk02_c (ORIGINAL - 50%)
+
+oc_systems2-1 (ORIGINAL - 90%)
+oc_systems2-2 (ORIGINAL - 90%)
+oc_systems2-3 (ORIGINAL - 90%)
+oc_systems2-4 (ORIGINAL - 90%)
+
+oc_docks (idk)
+oc_starlight (idk)
+oc_puzzler_part1 (idk)
+oc_puzzler_part2 (idk)
+
+oc_unsuspected (needs anti-crash fix)
+oc_wildfire (REQUIRES LUA OVERRIDE) - spawn point problem, rather get hl2dm coop version
+oc_vicarioustrauma (REQUIRES LUA OVERRIDE) - spawn point problem, rather get hl2dm coop version
+oc_tower_climb_beta_2 (REQUIRES LUA OVERRIDE) - spawn point problem, rather get hl2dm coop version
+oc_tantrum_b5 (REQUIRES LUA OVERRIDE) - spawn point problem
+oc_suiyousp_v2b2 (REQUIRES LUA OVERRIDE) - spawn point problem
+oc_courier (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
+oc_nerv (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
+oc_manor (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
+oc_warmachine (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked, kinda work..
+oc_breakout (REQUIRES LUA OVERRIDE) - spawn point problem
+oc_stitches_1 (REQUIRES LUA OVERRIDE) - spawn point problem
+oc_stitches_2 (REQUIRES LUA OVERRIDE) - spawn point problem
+oc_fireteam1 (REQUIRES LUA OVERRIDE) - spawn point problem
+oc_fireteam2 (REQUIRES LUA OVERRIDE) - spawn point problem
+oc_walking_dead (REQUIRES LUA OVERRIDE) - spawn point problem
+oc_freezingpoint (REQUIRES LUA OVERRIDE) - spawn point problem, 
+oc_evildead (REQUIRES LUA OVERRIDE) - minor spawn point problem, need guide of the map
+oc_newgappi_g (REQUIRES LUA OVERRIDE) - minor spawn point problem, need guide of the map
+oc_return_c17_02 *SERIES* (REQUIRES LUA OVERRIDE) - minor spawn point problem, entity problems
+
+oc_oxgen_02 (BORKED - NPC problem i see)
+oc_oxgen_02 (BORKED - NPC problem i see)
+oc_danmaku_i (BORKED)
+oc_island1_v12 (BORKED)
+oc_lobby (BORKED)
+oc_island1_v12 (BORKED)
+oc_island1_v12 (BORKED)
+oc_seamus (BORKED)
+oc_nacht_der_untoten (BORKED) - rather get gmod version
+oc_snowstorm (BORKED) - DOD:S
+oc_sogeki_v2b (BORKED) - can't kill those snipers
+all PVP maps (fuck those, they are not coop) (BORKED)
+
+SPECIAL MAPS
+oc_diving_v9 (옵시디언 컨플릭트 엔티티 기준점.)
+oc_harvest (옵시디언 컨플릭트 엔티티 기준점.)
+oc_paysan_b11 (옵시디언 컨플릭트 엔티티 기준점.)
+oc_inlight ()
+
+oc_sewers -> crash idk why

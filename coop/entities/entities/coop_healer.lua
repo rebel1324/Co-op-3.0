@@ -70,21 +70,21 @@ if (SERVER) then
 		self:EmitSound("npc/scanner/scanner_electric1.wav")
 		self.disable = true
 		for k, v in ipairs(player.GetAll()) do
-			netstream.Start(v, "MedicStationDisable", {self, true})
+			netstream.Start(v, "MedicStationDisable", self, true)
 		end
 	end
 
 	function ENT:Enable()
 		self.disable = false
 		for k, v in ipairs(player.GetAll()) do
-			netstream.Start(v, "MedicStationDisable", {self, false})
+			netstream.Start(v, "MedicStationDisable", self, false)
 		end
 	end
 	
 	hook.Add("PlayerAuthed", "healer_disabled", function(ply)
 		for k, v in ipairs(ents.FindByClass("coop_healer")) do
 			if v.disable then
-				netstream.Start(ply, "MedicStationDisable", {v, true})
+				netstream.Start(ply, "MedicStationDisable", v, true)
 			end
 		end
 	end)

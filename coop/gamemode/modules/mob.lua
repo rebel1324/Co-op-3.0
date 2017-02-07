@@ -1,3 +1,7 @@
+if (true) then
+	return
+end
+
 mob = mob or {}
 
 mob.ranks = {
@@ -199,7 +203,7 @@ if SERVER then
 					ent.rank = k
 					AddRanked(ent, k)
 
-					netstream.Start(player.GetAll(), "rankmob", {ent:EntIndex(), k})
+					netstream.Start(player.GetAll(), "rankmob", ent:EntIndex(), k)
 					break
 				end
 			end

@@ -4,13 +4,56 @@ DEFAULT_LIVES = 3 -- how lives will be?
 DEFAULT_MONEY = 100
 PLAYER_DIFFICULTY_MULTIPLY = 1.5
 PLAYER_DIFFICULTY_FACTOR = 20
-DIFFICULTY = 1.2
+DIFFICULTY = 1
 TEAMKILL_PUNISHMENT = 0 -- 1 is killing the team killer, 2 is kicking the team killer, 3 is banning team killer.
 TEAMKILL_BANTIME = 5 -- 5 minitues. setting this var to 0 will make ban perma.
 ALLOW_SUICIDE = true
+TEAM_BASED = false
+
+AMMO_CONV = {
+	["12 Gauge"] = "buckshot",
+	[".44 Magnum"] = "357",
+	[".50 AE"] = "357",
+	["7.62x51MM"] = "ar2",
+	[".45 ACP"] = "smg1",
+	["9x17MM"] = "pistol",
+	["5.45x39MM"] = "smg1",
+	["9x19MM"] = "pistol",
+	["5.56x45MM"] = "ar2",
+	["9x18MM"] = "pistol",
+	["9x19MM"] = "pistol",
+	["9x39MM"] = "pistol",
+	["5.7x28MM"] = "ar2",
+	["4mm SCAR Sabot"] = "ar2",
+	["7.62x51MM"] = "ar2",
+	[".338 Lapua"] = "sniperround",
+	["Smoke Grenades"] = "grenade",
+	["Frag Grenades"] = "grenade",
+	["Flash Grenades"] = "grenade",
+}
+
+REPLACE_ENTITIES = {
+	["weapon_smg1"] = {"cw_ump45"},
+	["weapon_ar2"] = {"cw_ak74"},
+	["weapon_pistol"] = {"cw_p99", "cw_makarov"},
+	["weapon_shotgun"] = {"cw_m3super90"},
+	["weapon_357"] = {"cw_mr96"},
+	["weapon_crossbow"] = {"cw_m14"},
+	["weapon_sniperrifle"] = {"cw_l115"},
+	["weapon_frag"] = {"cw_frag_grenade"},
+
+	["item_ammo_357"] = {"ammo_357"},
+	["item_box_buckshot"] = {"ammo_buckshot"},
+	["item_ammo_pistol"] = {"ammo_pistol"},
+	["item_ammo_smg1"] = {"ammo_smg"},
+	["item_ammo_ar2"] = {"ammo_ar2"},
+	["item_box_sniper_rounds"] = {"ammo_sniper"},
+	["item_healthvial"] = {"coop_healthvial"},
+	["item_healthkit"] = {"coop_healthvial"},
+	["item_battery"] = {"coop_healthvial"},
+}
 
 if SERVER then
-
 	MAP_CYCLE = {
 		"oc_trainride_a",
 		"oc_antlion_attack_01",
@@ -27,8 +70,8 @@ if SERVER then
 	DEFAULT_WEAPONS = {
 		"weapon_crowbar",
 		"weapon_physcannon",
-		"spy_pistol",
-		"coop_w_medic",
+		"cw_p99",
+		"weapon_healer",
 	}
 
 	MAP_ENTITIES = {
@@ -322,8 +365,12 @@ AMMO_TRANS[20] = "ar2altfire"
 AMMO_TRANS[21] = "slam"
 
 TEAM_SPECTATE = 0
+
 TEAM_ALIVE = 1
 TEAM_DEAD = 2
+
+TEAM_RED = 3
+TEAM_BLUE = 4
 
 DEAD_LIST = {}
 

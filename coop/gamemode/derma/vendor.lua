@@ -228,7 +228,7 @@ function PANEL:BringAmmoAmount(v, k)
 	btn:DockMargin(15, 5, 15, 2)
 	btn.DoClick = function(p)
 		surface.PlaySound("buttons/button15.wav")
-		netstream.Start("RequestAmmo", {k, slider:GetValue()} )
+		netstream.Start("RequestAmmo", k, slider:GetValue())
 		menu:Close()
 	end
 

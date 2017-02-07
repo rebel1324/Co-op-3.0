@@ -84,7 +84,7 @@ if (SERVER) then
 		end
 
 		for k, v in ipairs(ents.FindByClass("npc_*")) do
-			if self:GetPos():Distance(v:GetPos()) < 128 then
+			if self:GetPos():Distance(v:GetPos()) < 64 then
 				self:Explode()
 			end
 		end
