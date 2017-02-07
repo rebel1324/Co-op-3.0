@@ -12,6 +12,8 @@ oc_moegladosfactory (CUSTOMIZED - needs test)
 oc_starshop_troopers (CUSTOMIZED - needs test)
 oc_trashstand_v2 (CUSTOMIZED - needs test)
 
+oc_freezingpoint (CUSTOMIZED - 100%)
+
 oc_wgh (ORIGINAL - 100%)
 oc_bunker (ORIGINAL - 100%)
 oc_quest_b2 (ORIGINAL - 100%)
@@ -51,7 +53,6 @@ oc_stitches_2 (REQUIRES LUA OVERRIDE) - spawn point problem
 oc_fireteam1 (REQUIRES LUA OVERRIDE) - spawn point problem
 oc_fireteam2 (REQUIRES LUA OVERRIDE) - spawn point problem
 oc_walking_dead (REQUIRES LUA OVERRIDE) - spawn point problem
-oc_freezingpoint (REQUIRES LUA OVERRIDE) - spawn point problem, 
 oc_evildead (REQUIRES LUA OVERRIDE) - minor spawn point problem, need guide of the map
 oc_newgappi_g (REQUIRES LUA OVERRIDE) - minor spawn point problem, need guide of the map
 oc_return_c17_02 *SERIES* (REQUIRES LUA OVERRIDE) - minor spawn point problem, entity problems

@@ -19,10 +19,10 @@ end
 function ENT:KeyValue( key, value )
 		print(self:GetClass(), key, value)
 	if key == "OnStartTouch" then
-		self.touch = self.touch or {}
+		self.trigger = self.trigger or {}
 
 		local tbl = string.Explode(',', value)
-		table.insert(self.touch, tbl)
+		table.insert(self.trigger, tbl)
 	elseif key == "OnTrigger" then
 		self.trigger = self.trigger or {}
 
@@ -32,6 +32,23 @@ function ENT:KeyValue( key, value )
 	end
 end
 
+function ENT:Touch()
+	self.trigger = self.trigger or {}
+	for k, v in pairs(self.trigger) do
+		if v[1] == "!self" then
+			self:Fire(v[2], v[3], v[4])
+		else
+			local enttbl = ents.FindByName(v[1])
+			for _, target in pairs(enttbl) do
+				target:Fire(v[2], v[3], v[4])
+			end
+		end
+	end
+
+	self:Remove()
+end
+
+/*
 function ENT:Touch()
 	self.touch = self.touch or {}
 	for k, v in pairs(self.touch) do
@@ -47,6 +64,7 @@ function ENT:Touch()
 
 	self:Remove()
 end
+*/
 
 function ENT:Think()
 end
