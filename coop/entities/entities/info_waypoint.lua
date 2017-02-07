@@ -34,8 +34,14 @@ function ENT:KeyValue( key, value )
 		else
 			oc.waypoints[self:EntIndex()][key] = value or 2
 		end
-	elseif key == "parent" then
-		print("parent!!, value!!")
+	elseif key == "parentname" then
+		timer.Simple(.1, function()
+			for k, v in ipairs(ents.FindByName(value)) do
+				v:SetNetworkedString("waypoint", value)
+			end
+
+			oc.waypoints[self:EntIndex()][key] = value
+		end)
 	else
 		oc.waypoints[self:EntIndex()][key] = value
 	end

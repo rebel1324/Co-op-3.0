@@ -13,6 +13,7 @@ oc_starshop_troopers (CUSTOMIZED - needs test)
 oc_trashstand_v2 (CUSTOMIZED - needs test)
 
 oc_freezingpoint (CUSTOMIZED - 100%)
+oc_stitches_1 (CUSTOMIZED - 70%)
 
 oc_wgh (ORIGINAL - 100%)
 oc_bunker (ORIGINAL - 100%)
@@ -32,6 +33,7 @@ oc_systems2-2 (ORIGINAL - 90%)
 oc_systems2-3 (ORIGINAL - 90%)
 oc_systems2-4 (ORIGINAL - 90%)
 
+
 oc_docks (idk)
 oc_starlight (idk)
 oc_puzzler_part1 (idk)
@@ -40,22 +42,24 @@ oc_puzzler_part2 (idk)
 oc_unsuspected (needs anti-crash fix)
 oc_wildfire (REQUIRES LUA OVERRIDE) - spawn point problem, rather get hl2dm coop version
 oc_vicarioustrauma (REQUIRES LUA OVERRIDE) - spawn point problem, rather get hl2dm coop version
-oc_tower_climb_beta_2 (REQUIRES LUA OVERRIDE) - spawn point problem, rather get hl2dm coop version
-oc_tantrum_b5 (REQUIRES LUA OVERRIDE) - spawn point problem
-oc_suiyousp_v2b2 (REQUIRES LUA OVERRIDE) - spawn point problem
-oc_courier (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
+oc_tower_climb_beta_2 (REQUIRES LUA OVERRIDE) - spawn point problem, rather get hl2dm coop version // NOT AN OFFICIAL MAP
+oc_tantrum_b5 (REQUIRES LUA OVERRIDE) - spawn point problem // NOT AN OFFICIAL MAP
+oc_suiyousp_v2b2 (REQUIRES LUA OVERRIDE) - spawn point problem // NOT AN OFFICIAL MAP
 oc_nerv (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
 oc_manor (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
 oc_warmachine (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked, kinda work..
 oc_breakout (REQUIRES LUA OVERRIDE) - spawn point problem
-oc_stitches_1 (REQUIRES LUA OVERRIDE) - spawn point problem
 oc_stitches_2 (REQUIRES LUA OVERRIDE) - spawn point problem
 oc_fireteam1 (REQUIRES LUA OVERRIDE) - spawn point problem
 oc_fireteam2 (REQUIRES LUA OVERRIDE) - spawn point problem
 oc_walking_dead (REQUIRES LUA OVERRIDE) - spawn point problem
-oc_evildead (REQUIRES LUA OVERRIDE) - minor spawn point problem, need guide of the map
-oc_newgappi_g (REQUIRES LUA OVERRIDE) - minor spawn point problem, need guide of the map
+oc_evildead (REQUIRES LUA OVERRIDE) - minor spawn point problem, need guide of the map // NOT AN OFFICIAL MAP
+oc_newgappi_g (REQUIRES LUA OVERRIDE) - minor spawn point problem, need guide of the map // NOT AN OFFICIAL MAP
 oc_return_c17_02 *SERIES* (REQUIRES LUA OVERRIDE) - minor spawn point problem, entity problems
+
+
+oc_courier (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
+
 
 oc_oxgen_02 (BORKED - NPC problem i see)
 oc_oxgen_02 (BORKED - NPC problem i see)

@@ -231,6 +231,21 @@ local icons = {
 
 local function checkpointdisplay(ply)
 	for k, v in pairs(oc.waypoints) do
+		if (v.parentname) then
+			if (type(v.parentname) == "string") then
+				for _, ent in ipairs(ents.GetAll()) do
+					--print(v:GetNetworkedString("waypoint"), v.parentname)
+					if (ent:GetNetworkedString("waypoint") == v.parentname) then
+						v.parentname = ent
+					end
+				end
+			else
+				if (IsValid(v.parentname)) then
+					v.origin = v.parentname:GetPos() + v.parentname:OBBCenter()
+				end
+			end
+		end
+
 		if (!v.origin) then continue end
 		
 		local sx, sy, visible = v.origin:ToScreen().x, v.origin:ToScreen().y,  v.origin:ToScreen().visible
