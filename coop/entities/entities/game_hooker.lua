@@ -13,5 +13,5 @@ function ENT:OnRemove()
 end
 
 function ENT:AcceptInput( inputName, activator, called, data )
-	hook.Call("OnEntityTriggered", GAMEMODE, inputName, activator, data)
+	hook.Run("OnEntityTriggered", inputName, activator, data, called)
 end

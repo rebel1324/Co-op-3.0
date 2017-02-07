@@ -11,6 +11,7 @@ oc_trainride_a (CUSTOMIZED)
 oc_moegladosfactory (CUSTOMIZED - needs test)
 oc_starshop_troopers (CUSTOMIZED - needs test)
 oc_trashstand_v2 (CUSTOMIZED - needs test)
+
 oc_wgh (ORIGINAL - 100%)
 oc_bunker (ORIGINAL - 100%)
 oc_quest_b2 (ORIGINAL - 100%)

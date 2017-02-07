@@ -17,6 +17,7 @@ function ENT:Initialize()
 end
 
 function ENT:KeyValue( key, value )
+		print(self:GetClass(), key, value)
 	if key == "OnStartTouch" then
 		self.touch = self.touch or {}
 
@@ -28,7 +29,6 @@ function ENT:KeyValue( key, value )
 		local tbl = string.Explode(',', value)
 		table.insert(self.trigger, tbl)
 	else
-		--print(self:GetClass(), key, value)
 	end
 end
 
