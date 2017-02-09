@@ -11,26 +11,28 @@ ALLOW_SUICIDE = true
 TEAM_BASED = false
 BOSSES = {
 	"npc_helicopter",	
-	"npc_gunship",	
+	"npc_combinegunship",	
+	"npc_antlionguard",	
 }
 
 AMMO_CONV = {
 	["12 Gauge"] = "buckshot",
 	[".44 Magnum"] = "357",
 	[".50 AE"] = "357",
-	["7.62x51MM"] = "ar2",
 	[".45 ACP"] = "smg1",
 	["9x17MM"] = "pistol",
-	["5.45x39MM"] = "smg1",
-	["9x19MM"] = "pistol",
-	["5.56x45MM"] = "ar2",
 	["9x18MM"] = "pistol",
 	["9x19MM"] = "pistol",
 	["9x39MM"] = "pistol",
+
+	["5.45x39MM"] = "ar2",
+	["5.56x45MM"] = "ar2",
 	["5.7x28MM"] = "ar2",
 	["4mm SCAR Sabot"] = "ar2",
 	["7.62x51MM"] = "ar2",
+
 	[".338 Lapua"] = "sniperround",
+
 	["Smoke Grenades"] = "grenade",
 	["Frag Grenades"] = "grenade",
 	["Flash Grenades"] = "grenade",

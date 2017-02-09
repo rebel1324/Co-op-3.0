@@ -258,6 +258,7 @@ local function checkpointdisplay(ply)
 				if (IsValid(v.parentname)) then
 					v.origin = v.parentname:GetPos() + v.parentname:OBBCenter()
 				else
+					oc.waypoints[k] = nil
 					continue
 				end
 			end
@@ -384,7 +385,7 @@ local function playerhud(ply)
 				moneytimer = CurTime() + 3
 				
 				if ticktimer < CurTime() then
-					surface.PlaySound("UI/buttonclick.wav")
+					--surface.PlaySound("UI/buttonclick.wav")
 					ticktimer = CurTime() + .1
 				end
 				
@@ -631,7 +632,7 @@ local function drawboss()
 		if v.dispHealth > 0 then
 			v.lifetime = CurTime() + 3
 
-			v.dispHealth = math.max(v.ent:GetNetworkedInt("health"), math.Round(v.dispHealth - FrameTime() * 200))
+			v.dispHealth = math.max(math.max(v.ent:GetNetworkedInt("health"), 0), math.Round(v.dispHealth - FrameTime() * 200))
 		end
 
 		local drawColor = color_white

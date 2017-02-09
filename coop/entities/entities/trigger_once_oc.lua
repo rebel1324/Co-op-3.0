@@ -27,7 +27,6 @@ function ENT:KeyValue( key, value )
 
 		local tbl = string.Explode(',', value)
 		table.insert(self.trigger, tbl)
-	else
 	end
 end
 

@@ -49,17 +49,9 @@ end
 
 local gridsize = 1
 
-if SERVER then
 	function SWEP:PrimaryAttack()
+		print(SERVER, CLIENT)
 	end
-
-	function SWEP:Reload()
-	end
-
-	function SWEP:SecondaryAttack()
-	end
-end
-
 if CLIENT then
 	function SWEP:PrimaryAttack()
 		if IsFirstTimePredicted() then

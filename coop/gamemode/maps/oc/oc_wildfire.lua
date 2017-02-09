@@ -46,6 +46,7 @@ if (SERVER) then
     		end
     	end
     end)
+    
     hook.Add("AcceptInput", "oc_freezingpoint", function(ent, input, activator, caller, value )
     	if !(ent and ent:IsValid() and
     		activator and activator:IsValid() and

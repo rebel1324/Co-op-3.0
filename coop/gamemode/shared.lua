@@ -1,4 +1,4 @@
-GM.Name = "Co-op 협동 임무 3.0" // Put Gamemode info here
+GM.Name = "Co-op 3.0" // Put Gamemode info here
 GM.Author = "N/A"
 GM.Email = "N/A"
 GM.Website = "N/A"

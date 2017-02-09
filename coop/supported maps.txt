@@ -1,22 +1,39 @@
-SUPPORTED MAP LIST (OFFICIAL)
+-------------------------------------------------------------------------------
+								
+									CO-OP 3.0
+                         OFFICIAL SUPPORTED MAP LISTS
+		
+-------------------------------------------------------------------------------
 
-OBSIDIAN CONFLICT: -TEAM BASED MAPS ARE NOT SUPPORTED because this is co-op mod-
+	You can get the best experience with this co-op gamemode with supported
+	co-op maps.
 
-OVERALL PROBLEM:
- - few maps are pretty not familar for the user.
-   you need to figure out and thrust your dick at every directions.
+	The list below is good supported maps that you can get good experience
 
-oc_antlion_attack_01 (CUSTOMIZED)
-oc_trainride_a (CUSTOMIZED)
-oc_moegladosfactory (CUSTOMIZED - needs test)
-oc_starshop_troopers (CUSTOMIZED - needs test)
+--------------------------------------------------------------------------------
+
+                    * OBSIDIAN CONFLICT *
+                  A mod released in 2008. 
+                  Obsidian Conflict was pretty good co-op 
+                  HL2 MOD in old time.
+                  But currently there is not much people
+                  playing Obsidian Conflict.
+
+                  This gamemode supports Obsidian Conflict
+                  maps not all of them, but you can use them
+                  in good purpose.
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+								   PLAYABLE
+					You can run the server without major error.
+--------------------------------------------------------------------------------
+oc_antlion_attack_01 (CUSTOMIZED - 100%)
+oc_trainride_a (CUSTOMIZED - 100%)
+oc_breakout (CUSTOMIZED - 100%)
 oc_trashstand_v2 (CUSTOMIZED - needs test)
-
 oc_freezingpoint (CUSTOMIZED - 100%)
-oc_stitches_1 (CUSTOMIZED - 70%)
-
-oc_wildfire (CUSTOMIZED - WIP - 70%)
-
 oc_wgh (ORIGINAL - 100%)
 oc_bunker (ORIGINAL - 100%)
 oc_quest_b2 (ORIGINAL - 100%)
@@ -26,29 +43,36 @@ oc_cannon_2 (ORIGINAL - 100%)
 oc_junkfall_1c (ORIGINAL - 100%)
 oc_r-day (ORIGINAL - 100%)
 oc_d_crimson_v2h (ORIGINAL - 100%) - need guide of the map
-oc_combinebase_alpha1 (ORIGINAL - 85%)
-oc_spelunk01_b (ORIGINAL - 50%)
-oc_spelunk02_c (ORIGINAL - 50%)
+oc_moegladosfactory (CUSTOMIZED - needs test)
+oc_starshop_troopers (CUSTOMIZED - needs test)
 
+--------------------------------------------------------------------------------
+					   PLAYABLE BUT CAN'T BEAT THE MAP
+			      You need to monitor your server frequently.
+--------------------------------------------------------------------------------
+* KINDA WORKING
 oc_systems2-1 (ORIGINAL - 90%)
 oc_systems2-2 (ORIGINAL - 90%)
 oc_systems2-3 (ORIGINAL - 90%)
 oc_systems2-4 (ORIGINAL - 90%)
+oc_combinebase_alpha1 (ORIGINAL - 85%)
+oc_stitches_1 (CUSTOMIZED - 70%)
+oc_wildfire (CUSTOMIZED - WIP - 70%)
+oc_spelunk01_b (ORIGINAL - 50%)
+oc_spelunk02_c (ORIGINAL - 50%)
 
-
+* NOT WORKING
+oc_courier (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
 oc_docks (idk)
 oc_starlight (idk)
 oc_puzzler_part1 (idk)
 oc_puzzler_part2 (idk)
-
-oc_unsuspected (needs anti-crash fix)
-oc_vicarioustrauma (REQUIRES LUA OVERRIDE) - spawn point problem, rather get hl2dm coop version
 oc_manor (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
-oc_breakout (REQUIRES LUA OVERRIDE) - spawn point problem
 oc_stitches_2 (REQUIRES LUA OVERRIDE) - spawn point problem
 oc_fireteam1 (REQUIRES LUA OVERRIDE) - spawn point problem
 oc_fireteam2 (REQUIRES LUA OVERRIDE) - spawn point problem
-
+oc_vicarioustrauma (REQUIRES LUA OVERRIDE) - spawn point problem, rather get hl2dm coop version // NOT AN OFFICAL MAP
+oc_unsuspected (needs anti-crash fix) // NOT AN OFFICAL MAP
 oc_nerv (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked. // NOT AN OFFICIAL MAP
 oc_warmachine (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked, kinda work.. // NOT AN OFFICIAL MAP
 oc_walking_dead (REQUIRES LUA OVERRIDE) - spawn point problem // NOT AN OFFICIAL MAP
@@ -57,13 +81,11 @@ oc_tantrum_b5 (REQUIRES LUA OVERRIDE) - spawn point problem // NOT AN OFFICIAL M
 oc_suiyousp_v2b2 (REQUIRES LUA OVERRIDE) - spawn point problem // NOT AN OFFICIAL MAP
 oc_evildead (REQUIRES LUA OVERRIDE) - minor spawn point problem, need guide of the map // NOT AN OFFICIAL MAP
 oc_newgappi_g (REQUIRES LUA OVERRIDE) - minor spawn point problem, need guide of the map // NOT AN OFFICIAL MAP
-
-
-
+--------------------------------------------------------------------------------
+								  NOT PLAYABLE
+					You can't run the server with these maps.
+--------------------------------------------------------------------------------
 oc_return_c17_02 *SERIES* (REQUIRES LUA OVERRIDE) // WHY I'M SEEING ERRORS?
-oc_courier (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
-
-
 oc_oxgen_02 (BORKED - NPC problem i see)
 oc_oxgen_02 (BORKED - NPC problem i see)
 oc_danmaku_i (BORKED)
@@ -77,7 +99,6 @@ oc_snowstorm (BORKED) - DOD:S
 oc_sogeki_v2b (BORKED) - can't kill those snipers
 all PVP maps (fuck those, they are not coop) (BORKED)
 
-SPECIAL MAPS
 oc_diving_v9 (옵시디언 컨플릭트 엔티티 기준점.)
 oc_harvest (옵시디언 컨플릭트 엔티티 기준점.)
 oc_paysan_b11 (옵시디언 컨플릭트 엔티티 기준점.)

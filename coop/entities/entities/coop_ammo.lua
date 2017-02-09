@@ -43,10 +43,10 @@ if (SERVER) then
 
 	function ENT:OnRemove()
 		if self.respawn and !self.cleanup then
-			local pos, ang, model, wep, tt, aa = self.pos, self.ang, self:GetModel(), self.weapon, self.type, self.amount
+			local class, pos, ang, model, wep, tt, aa = self:GetClass(), self.pos, self.ang, self:GetModel(), self.weapon, self.type, self.amount
 
 			timer.Simple(WEAPON_RESPAWN_TIME, function()
-				local ent = ents.Create("coop_ammo")
+				local ent = ents.Create(class)
 				ent:SetModel(model)
 				ent:SetPos(pos)
 				ent:SetAngles(ang)
