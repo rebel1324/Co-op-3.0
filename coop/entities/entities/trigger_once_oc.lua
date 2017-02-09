@@ -17,7 +17,6 @@ function ENT:Initialize()
 end
 
 function ENT:KeyValue( key, value )
-		print(self:GetClass(), key, value)
 	if key == "OnStartTouch" then
 		self.trigger = self.trigger or {}
 

@@ -9,6 +9,10 @@ TEAMKILL_PUNISHMENT = 0 -- 1 is killing the team killer, 2 is kicking the team k
 TEAMKILL_BANTIME = 5 -- 5 minitues. setting this var to 0 will make ban perma.
 ALLOW_SUICIDE = true
 TEAM_BASED = false
+BOSSES = {
+	"npc_helicopter",	
+	"npc_gunship",	
+}
 
 AMMO_CONV = {
 	["12 Gauge"] = "buckshot",

@@ -19,6 +19,10 @@ function entityMeta:IsNPC()
 	return old.IsNPC(self) or self.nextbot
 end
 
+function entityMeta:IsBoss()
+	return table.HasValue(BOSSES, self:GetClass())
+end
+
 function GM:PlayerNoClip()
 	return true
 end
@@ -80,8 +84,6 @@ if (mapName:find("cs_") or mapName:find("de_")) then
 	CSMISSION = true
 	path = path .. "cs/"
 end
-
-print("coop/gamemode/" .. path ..mapName..".lua")
 
 local a, b = file.Find("coop/gamemode/" .. path ..mapName..".lua", "LUA")
 for k, v in pairs(a) do

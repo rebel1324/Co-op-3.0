@@ -103,6 +103,20 @@ surface.CreateFont("WaypointMeterFont", {
 	shadow = true,
 })
 
+surface.CreateFont("BossFont", {
+	font = "Trajan Pro",
+	size = 33,
+	weight = 800,
+	shadow = true,
+})
+
+surface.CreateFont("BossHealthFont", {
+	font = "Trajan Pro",
+	size = 44,
+	weight = 800,
+	shadow = true,
+})
+
 oc.waypoints = oc.waypoints or {}
 oc.pointmsgs = oc.pointmsgs or {}
 
@@ -233,8 +247,9 @@ local function checkpointdisplay(ply)
 	for k, v in pairs(oc.waypoints) do
 		if (v.parentname) then
 			if (type(v.parentname) == "string") then
+				-- this only runs until waypoint display finds the marked target.
+
 				for _, ent in ipairs(ents.GetAll()) do
-					--print(v:GetNetworkedString("waypoint"), v.parentname)
 					if (ent:GetNetworkedString("waypoint") == v.parentname) then
 						v.parentname = ent
 					end
@@ -242,6 +257,8 @@ local function checkpointdisplay(ply)
 			else
 				if (IsValid(v.parentname)) then
 					v.origin = v.parentname:GetPos() + v.parentname:OBBCenter()
+				else
+					continue
 				end
 			end
 		end
@@ -442,9 +459,7 @@ local mindist = 100
 local function playerdisp(ply)
 	for k, v in ipairs(player.GetAll()) do
 		if v == ply then
-			if !v:ShouldDrawLocalPlayer() then
-				continue
-			end
+			continue
 		end
 
 		if v:Team() == TEAM_DEAD then
@@ -590,11 +605,75 @@ local function drawtimer()
 	surface.DrawText(text)
 end
 
+currentDisplay = currentDisplay or {}
+local function updateBoss(ent)
+	if (!currentDisplay[ent:EntIndex()]) then
+		currentDisplay[ent:EntIndex()] = {
+			alpha = 0,
+			lifetime = CurTime() + 3,
+			health = ent:Health(),
+			dispHealth = ent:Health(),
+			name = ent:GetNetworkedString("name", "") != "" or ent:GetClass(),
+			ent = ent,
+			diff = 0,
+		}
+	end
+end
+
+local function drawboss()
+	local index = 0
+	local tx, ty = 50, 50
+	for k, v in pairs(currentDisplay) do
+		if (math.Round(v.alpha) <= 0 and v.lifetime < CurTime()) then
+			currentDisplay[k] = nil
+		end
+
+		if v.dispHealth > 0 then
+			v.lifetime = CurTime() + 3
+
+			v.dispHealth = math.max(v.ent:GetNetworkedInt("health"), math.Round(v.dispHealth - FrameTime() * 200))
+		end
+
+		local drawColor = color_white
+
+		if (v.ent:GetNetworkedInt("health") != v.dispHealth) then
+			v.diff = math.min(v.diff + FrameTime()*5, 1)
+		else
+			v.diff = math.max(v.diff - FrameTime(), 0)
+		end
+
+		if (v.dispHealth == 0) then
+			drawColor = Color(255, 0, 0)
+		else
+			drawColor = Color(255, 255 - v.diff*255, 255 - v.diff*255)
+		end
+
+		if v.lifetime < CurTime() then
+			v.alpha = math_clamp(Lerp(CL_FT()*4, v.alpha, 0), 0, 255)	
+		else
+			v.alpha = math_clamp(Lerp(CL_FT()*3, v.alpha, 255), 0, 255)	
+		end
+
+
+		local tw, th = draw.SimpleText(v.name, "BossFont", tx, ty, ColorAlpha(drawColor, v.alpha), 3, 3)
+		tx, ty = tx, ty + th
+
+		local tw, th = draw.SimpleText(v.dispHealth, "BossHealthFont", tx, ty, ColorAlpha(drawColor, v.alpha), 3, 3)
+		tx, ty = tx, ty + th + 5
+
+		index = index + 1
+	end
+end
+
 local down_gradient = surface.GetTextureID("gui/gradient_down")
 local mindist = 100
 local maxdist = 500
 local function stuffdisp(ply)
 	for k, v in ipairs(ents.GetAll()) do
+		if (v:IsBoss()) then
+			updateBoss(v)
+		end
+
 		local stuffdat = MAP_ENTITY_TEXTS[v:GetClass()]
 
 		if !stuffdat then 
@@ -691,6 +770,7 @@ function GM:HUDPaint()
 	playerhud(ply)
 	playerdisp(ply)
 	stuffdisp(ply)
+	drawboss(ply)
 	screenflash()
 	drawtimer()
 end

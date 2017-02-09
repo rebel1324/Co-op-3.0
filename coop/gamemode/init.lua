@@ -547,3 +547,11 @@ function GM:AcceptInput(entity, input, activator, caller, value )
 		print(entity, input)
 	end
 end
+
+function GM:Think()
+	for k, v in ipairs(ents.GetAll()) do
+		if (v:IsBoss()) then
+			v:SetNetworkedInt("health", v:Health())
+		end
+	end
+end
