@@ -34,6 +34,7 @@ SWEP.Primary.ClipSize		= -1					// Size of a clip
 SWEP.Primary.DefaultClip	= -1				// Default number of bullets in a clip
 SWEP.Primary.Automatic		= false				// Automatic/Semi Auto
 SWEP.Primary.Ammo			= "none"
+SWEP.FireDelay		= .02
 
 SWEP.Secondary.ClipSize		= -1				// Size of a clip
 SWEP.Secondary.DefaultClip	= -1				// Default number of bullets in a clip
@@ -44,7 +45,7 @@ SWEP.AddSpread = 0
 SWEP.SpreadWait = 0
 SWEP.AddSpreadSpeed = 1
 SWEP.npcSWEP = true
-SWEP.minBurst = 1
+SWEP.minBurst = 3
 SWEP.maxBurst = 4
 
 local math = math
@@ -59,8 +60,8 @@ hook.Add("Think", "csFix.think", function()
 				end
 
 				if v.csFix then
-						local act = npc:GetActivity()
-						if act == 16 then
+						local act = npc.GetActivity and npc:GetActivity()
+						if act and act == 16 then
 							--v:RestartGesture( number sequence )
 							v:PrimaryAttack()
 					end

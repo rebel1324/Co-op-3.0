@@ -151,6 +151,19 @@ local function initializeCW2()
 								weapon.attached = true
 							end
 
+							if (!weapon.attached and weapon:GetClass() == "cw_ar15") then
+								weapon:attachSpecificAttachment("bg_ar15heavystock")
+								weapon:attachSpecificAttachment("bg_longbarrel")
+								weapon:attachSpecificAttachment("md_schmidt_shortdot")
+								weapon.attached = true
+							end
+
+							if (!weapon.attached and weapon:GetClass() == "cw_g36c") then
+								weapon:attachSpecificAttachment("md_eotech")
+								weapon:attachSpecificAttachment("md_foregrip")
+								weapon.attached = true
+							end
+
 							weapon:recalculateStats()
 							
 							netstream.Start(weapon.Owner, "coopUpdateWeapon", weapon)

@@ -162,11 +162,19 @@ wep.class = "cw_ak74"
 table.insert(MERCHANT_WEAPONS, wep)
 
 local wep = {}
-wep.name = "Democracy Rifle"
+wep.name = "AR15"
 wep.desc = "A Powerful gun that consumes AR2 ammo."
 wep.price = 100
 wep.icon = "m4a1"
 wep.class = "cw_ar15"
+table.insert(MERCHANT_WEAPONS, wep)
+
+local wep = {}
+wep.name = "G36C"
+wep.desc = "A Powerful gun that consumes AR2 ammo."
+wep.price = 150
+wep.icon = "m4a1"
+wep.class = "cw_g36c"
 table.insert(MERCHANT_WEAPONS, wep)
 
 local wep = {}

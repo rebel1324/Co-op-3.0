@@ -25,8 +25,11 @@ if (SERVER) then
 			end
 
 			if (!v.nextChase or v.nextChase < CurTime()) then
+				if (myhero) then
+					v:SetTarget(myhero)
+				end
 				v:SetSchedule(myhero and SCHED_TARGET_CHASE or SCHED_TAKE_COVER_FROM_ENEMY )
-				v.nextChase = CurTime() + 3
+				v.nextChase = CurTime() + 2	
 			end
 		end
 	end)

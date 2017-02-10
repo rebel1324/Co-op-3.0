@@ -787,6 +787,10 @@ if (SERVER) then
     }
     CURRENT_CHECKPOINT = "PlayerSpawnGroup_1"
 
+    local blacklist = {
+        "weapon_scripted",
+    }
+
     hook.Add("InitPostEntity", "oc_courier", function(player)
         for k, v in ipairs(ents.GetAll()) do
             if (CHECKRELAYS[v:GetName()]) then

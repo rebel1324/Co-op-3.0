@@ -48,18 +48,13 @@ if (SERVER) then
     end)
     
     hook.Add("AcceptInput", "oc_freezingpoint", function(ent, input, activator, caller, value )
-    	if !(ent and ent:IsValid() and
-    		activator and activator:IsValid() and
-    		caller and caller:IsValid()) then return end
+        if !(ent and ent:IsValid() and
+            activator and activator:IsValid() and
+            caller and caller:IsValid()) then return end
 
-    	if (ent:GetName() == "Harbor_SetupScript") then
-
-    	end
-
-
-    	--print("ENTITY ACTIVATED!!!!!: ".. input)
-      --  print(ent, activator, caller)
-       -- print(IsValid(ent) and ent:GetName() or "NONE", IsValid(activator) and activator:GetName() or "NONE", IsValid(caller) or caller:GetName() or "NONE")
+            print("ENTITY ACTIVATED!!!!!: ".. input)
+            print(ent, activator, caller)
+            print(IsValid(ent) and ent:GetName() or "NONE", IsValid(activator) and activator:GetName() or "NONE", IsValid(caller) or caller:GetName() or "NONE")
     end)
 
     hook.Add("InitPostEntity", "oc_wildfire", function(player)
