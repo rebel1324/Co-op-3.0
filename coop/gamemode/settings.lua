@@ -13,6 +13,7 @@ BOSSES = {
 	"npc_helicopter",	
 	"npc_combinegunship",	
 	"npc_antlionguard",	
+	"npc_strider",	
 }
 
 AMMO_CONV = {
@@ -43,8 +44,8 @@ REPLACE_ENTITIES = {
 	["weapon_ar2"] = {"cw_ak74"},
 	["weapon_pistol"] = {"cw_p99", "cw_makarov"},
 	["weapon_shotgun"] = {"cw_m3super90"},
-	["weapon_357"] = {"cw_mr96"},
-	["weapon_crossbow"] = {"cw_m14"},
+	["weapon_357"] = {"cw_mr96", "cw_deagle"},
+	["weapon_crossbow"] = {"cw_l115"},
 	["weapon_sniperrifle"] = {"cw_l115"},
 	["weapon_frag"] = {"cw_frag_grenade"},
 
@@ -102,10 +103,25 @@ if SERVER then
 	AMMO_SUPPLY_FACTOR = .1 -- Ammo Pack will supply <[ammo type limit]*[ammo supply factor]> amount of ammo to player.
 
 else
+	local function gethead(ent)
+		local pos
+		local bone = ent:GetAttachment(ent:LookupAttachment("eyes"))
+		pos = bone and bone.Pos
+		if not pos then
+			local bone = ent:LookupBone("ValveBiped.Bip01_Head1")
+			
+			pos = bone and ent:GetBonePosition(bone) or ent:EyePos()
+		end
+		
+		return pos
+	end
 
 	MAP_ENTITY_TEXTS = {
 		["coop_dispencer"] = {name = lang.ent_vending, pos = function(ent) return ent:GetPos() + ent:GetUp()*40 end},
 		["coop_healer"] = {name = lang.ent_healer, pos = function(ent) return ent:GetPos() + ent:GetUp()*28 end},
+		["npc_merchant"] = {name = lang.ent_merchant, pos = function(ent)
+			return gethead(ent) + Vector(0, 0, 12) or ent:GetPos() + ent:GetUp()*28
+		end},
 	}
 
 end
@@ -138,11 +154,11 @@ AMMO_LIMITS["slam"] = 5
 MERCHANT_WEAPONS = {}
 
 local wep = {}
-wep.name = "Galiua Rifle"
-wep.desc = "A Powerful gun that consumes AR2 ammo."
+wep.name = "AK74"
+wep.desc = "A Basic Rifle that consumes AR2 ammo."
 wep.price = 100
 wep.icon = "galil"
-wep.class = "spy_galil"
+wep.class = "cw_ak74"
 table.insert(MERCHANT_WEAPONS, wep)
 
 local wep = {}
@@ -150,46 +166,39 @@ wep.name = "Democracy Rifle"
 wep.desc = "A Powerful gun that consumes AR2 ammo."
 wep.price = 100
 wep.icon = "m4a1"
-wep.class = "spy_m4a1"
+wep.class = "cw_ar15"
 table.insert(MERCHANT_WEAPONS, wep)
 
 local wep = {}
-wep.name = "Autovmat Rifle"
-wep.desc = "A Powerful gun that consumes AR2 ammo."
+wep.name = "L115"
+wep.desc = "A Powerful Sniper Rifle that consumes AR2 ammo."
 wep.icon = "ak47"
-wep.class = "spy_ak47"
-wep.price = 100
+wep.class = "cw_l115"
+wep.price = 150
 table.insert(MERCHANT_WEAPONS, wep)
 
 local wep = {}
-wep.name = "URP Sub Machinegun"
+wep.name = "MP5"
 wep.desc = "A Powerful gun that consumes SMG ammo."
-wep.class = "spy_smg"
+wep.icon = "ak47"
+wep.class = "cw_mp5"
 wep.price = 80
 table.insert(MERCHANT_WEAPONS, wep)
 
 local wep = {}
-wep.name = "Terminator Sub Machinegun"
-wep.desc = "A Powerful gun that consumes SMG ammo."
-wep.icon = "tmp"
-wep.class = "spy_tmp"
-wep.price = 170
-table.insert(MERCHANT_WEAPONS, wep)
-
-local wep = {}
-wep.name = "Sniper Pistol"
-wep.desc = "A Powerful gun that consumes Sniper ammo."
+wep.name = "Desert Eagle"
+wep.desc = "A Powerful gun that consumes 357 ammo."
 wep.price = 150
 wep.icon = "deagle"
-wep.class = "weapon_sniperrifle"
+wep.class = "cw_deagle"
 table.insert(MERCHANT_WEAPONS, wep)
 
 local wep = {}
-wep.name = "Compact Pistol"
-wep.desc = "A Powerful gun that consumes Pistol ammo."
+wep.name = "MR96 Revolver"
+wep.desc = "A Powerful gun that consumes 357 ammo."
 wep.price = 30
 wep.icon = "p228"
-wep.class = "spy_pistol"
+wep.class = "cw_mr96"
 table.insert(MERCHANT_WEAPONS, wep)
 
 local wep = {}

@@ -76,6 +76,8 @@ if SERVER then
 
 	function ENT:AcceptInput( inputName, activator, called, data )
 		if inputName == "Use" then
+			netstream.Start(activator, "coop_vendor")
+			
 			self.trigger = self.trigger or {}
 			for k, v in pairs(self.trigger) do
 				if v[1] == "!self" then

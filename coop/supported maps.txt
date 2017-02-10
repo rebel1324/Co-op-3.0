@@ -34,6 +34,8 @@ oc_trainride_a (CUSTOMIZED - 100%)
 oc_breakout (CUSTOMIZED - 100%)
 oc_trashstand_v2 (CUSTOMIZED - needs test)
 oc_freezingpoint (CUSTOMIZED - 100%)
+oc_fireteam1 (CUSTOMIZED - 100%) - need guide of the map
+oc_fireteam2 CUSTOMIZED - 100%) - need guide of the map
 oc_wgh (ORIGINAL - 100%)
 oc_bunker (ORIGINAL - 100%)
 oc_quest_b2 (ORIGINAL - 100%)
@@ -43,14 +45,14 @@ oc_cannon_2 (ORIGINAL - 100%)
 oc_junkfall_1c (ORIGINAL - 100%)
 oc_r-day (ORIGINAL - 100%)
 oc_d_crimson_v2h (ORIGINAL - 100%) - need guide of the map
-oc_moegladosfactory (CUSTOMIZED - needs test)
-oc_starshop_troopers (CUSTOMIZED - needs test)
 
 --------------------------------------------------------------------------------
 					   PLAYABLE BUT CAN'T BEAT THE MAP
 			      You need to monitor your server frequently.
 --------------------------------------------------------------------------------
 * KINDA WORKING
+oc_moegladosfactory (CUSTOMIZED - needs test)
+oc_starshop_troopers (CUSTOMIZED - needs test)
 oc_systems2-1 (ORIGINAL - 90%)
 oc_systems2-2 (ORIGINAL - 90%)
 oc_systems2-3 (ORIGINAL - 90%)
@@ -60,17 +62,15 @@ oc_stitches_1 (CUSTOMIZED - 70%)
 oc_wildfire (CUSTOMIZED - WIP - 70%)
 oc_spelunk01_b (ORIGINAL - 50%)
 oc_spelunk02_c (ORIGINAL - 50%)
-
-* NOT WORKING
 oc_courier (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
 oc_docks (idk)
 oc_starlight (idk)
 oc_puzzler_part1 (idk)
 oc_puzzler_part2 (idk)
+
+* NOT WORKING
 oc_manor (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked.
 oc_stitches_2 (REQUIRES LUA OVERRIDE) - spawn point problem
-oc_fireteam1 (REQUIRES LUA OVERRIDE) - spawn point problem
-oc_fireteam2 (REQUIRES LUA OVERRIDE) - spawn point problem
 oc_vicarioustrauma (REQUIRES LUA OVERRIDE) - spawn point problem, rather get hl2dm coop version // NOT AN OFFICAL MAP
 oc_unsuspected (needs anti-crash fix) // NOT AN OFFICAL MAP
 oc_nerv (REQUIRES LUA OVERRIDE) - spawn point problem, objective borked. // NOT AN OFFICIAL MAP

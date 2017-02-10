@@ -195,7 +195,7 @@ if SERVER then
 		local scan = ents.FindInSphere(ply:GetPos(), 128)
 		local near = false
 		for k, v in pairs(scan) do
-			if v:GetClass() == "coop_dispencer" then
+			if v:GetClass() == "coop_dispencer" or v:GetClass() == "npc_merchant" then
 				near = v
 			end
 		end

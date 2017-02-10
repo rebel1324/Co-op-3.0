@@ -12,30 +12,16 @@ Description:
 
 After receiving a distress signal from a nearby rebel outpost, you are to use the jeep to make your way over there and help defend them.
 ]]
-MAP_CONFIG = {
-	// File was created for use in Obsidian Conflict ONLY!
-"oc_fireteam_1"
-{
-	"mp_falldamage"	"1"
-	"mp_flashlight" "1"
-	"sk_max_ar2" "120"
-}
-oc_fireteam_1
-{
-    Remove
-    {
-        Origin
-        {
+
+MODIFY_REMOVE =[[
             "-329.88 -3437.13 108.315" {}
             "-290.146 -3819.82 129.761" {}
             "-304.86 -3952.76 117.611" {}
             "-301.354 -3641.88 125.521" {}
             "-493.147 -3971.65 108.318" {}
-        }
-    }
-    Add
-    {
-        "prop_dynamic_override"
+            ]]
+MODIFY_ADD = [[
+     "prop_dynamic_override"
         {
             "angles" "-2.75581 11.2134 8.62872"
             "disablereceiveshadows" "0"
@@ -585,32 +571,117 @@ oc_fireteam_1
             "disableallshadows" "0"
             "distance" "75"
             "origin" "-11281 -10614.4 70"
-        }
-    }
-    Modify
-    {
-        ClassName
-        {
-            "worldspawn"
-            {
-                "mapversion" "13"
-            }
-        }
-        Origin
+        }   
+]]
+MODIFY_MODIFY = [[
         {
             "-1621.3 -5914 128"
             {
                 "origin" "-1703 -5908 128"
             }
-        }
-    }
-SpawnItems
-{
-    "weapon_crowbar" "1"
-    "weapon_physcannon" "1"
-    "weapon_smg1" "1"
-    "item_ammo_smg1" "5"
-}
-}
+        }  
+]]
 
-}
+if (SERVER) then
+    MAPCHECKPOINTS = MAPCHECKPOINTS or {
+        ["Checkpoint_1"] = {},
+        ["Checkpoint_2"] = {},  
+    }
+    CURRENT_CHECKPOINT = "Checkpoint_1"
+
+    local blacklist = {       
+        "weapon_scripted",
+    }
+
+    hook.Add("InitPostEntity", "oc_fireteam_1", function(player)
+        for k, v in ipairs(ents.GetAll()) do
+            if (MAPCHECKPOINTS[v:GetName()]) then
+                if (v and v:IsValid()) then
+                    table.insert(MAPCHECKPOINTS[v:GetName()], v)
+                end
+            end
+        end
+
+        local spawner = parseString(MODIFY_ADD:gsub("\t", ""))
+        for k, v in ipairs(spawner) do
+            local classname = v[1]
+            local keyvalues = v[2]
+            
+            if (table.HasValue(blacklist, classname)) then
+                continue
+            end
+
+            SOLID = nil
+            if (classname == "prop_dynamic_override") then
+                classname = "prop_physics"
+                SOLID = true
+            end
+
+            if (classname == "prop_physics_override") then
+                classname = "prop_physics"
+                --SOLID = true
+            end
+
+            --if (true) then continue end
+
+            local entity = ents.Create(classname)
+            if (entity and entity:IsValid()) then
+                for _, v in pairs(keyvalues) do
+                    key = v[1]
+                    val = v[2]
+                    entity:SetKeyValue(key, val)
+
+                    if key == "origin" then
+                        local aots = string.Explode( " ", val)
+                        entity:SetPos(Vector(aots[1], aots[2], aots[3]))
+                    elseif key == "angles" then
+                        local aots = string.Explode( " ", val)
+                        entity:SetAngles(Angle(aots[1], aots[2], aots[3]))
+                    elseif key == "model" then
+                        entity:SetModel(val)
+                    end
+
+                    if (SOLID) then
+                        timer.Simple(0, function()
+                            if (entity and entity:IsValid()) then 
+                                entity:SetMoveType(MOVETYPE_NONE)
+
+                                local phys = entity:GetPhysicsObject()
+
+                                if phys and phys:IsValid() then
+                                    phys:Sleep()
+                                    phys:EnableMotion(true)
+                                end
+                            end
+                        end)
+                    end
+
+                end
+
+                entity:Spawn()
+            end
+        end
+
+    end)
+
+    hook.Add("OnEntityTriggered", "custom_map", function(inputName, activator, data)
+        if (inputName == "Spawn") then
+            CURRENT_CHECKPOINT = data
+        end
+    end)
+
+    hook.Add("EntityKeyValue", "oc_fireteam_1", function(entity, key, value)
+        if (value:find("Checkpoint_1,Disable,,0,1")) then
+            entity:SetKeyValue("OnTrigger", "hooker,Spawn,Checkpoint_2,0,-1")      
+        end
+    end)
+
+    hook.Add("MapSpawnPoint", "oc_fireteam_1", function(player)
+        local point = table.Random(MAPCHECKPOINTS[CURRENT_CHECKPOINT])
+        while (!point:IsValid()) do
+            point = table.Random(MAPCHECKPOINTS[CURRENT_CHECKPOINT])
+        end
+
+        return point
+    end)
+end

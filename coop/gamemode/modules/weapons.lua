@@ -300,31 +300,31 @@ if CLIENT then
 	end
 	effects.Register( EFFECT, "cusshell" )
 else
-	netstream.Hook("RequestAmmo", function(ply, dat)
+	netstream.Hook("RequestAmmo", function(ply, ammo, amount)
 		local scan = ents.FindInSphere(ply:GetPos(), 128)
 		local near = false
 		for k, v in pairs(scan) do
-			if v:GetClass() == "coop_dispencer" then
+			if v:GetClass() == "coop_dispencer" or v:GetClass() == "npc_merchant" then
 				near = v
 			end
 		end
 
-		local ammoindex, ammoamt = dat[1], math.Round(dat[2])
+		amount = math.Round(amount)
 
-		local ammodat = MERCHANT_AMMO[ammoindex]
+		local ammodat = MERCHANT_AMMO[ammo]
 		local plyammo = ply:GetAmmoCount( ammodat.ammo )
 		local clipammo = AMMO_LIMITS[ammodat.ammo] - plyammo -- to prevent all fuckerys
 
-		ammoamt = math.Clamp(ammoamt, 0, clipammo)
+		amount = math.Clamp(amount, 0, clipammo)
 
-		if ammodat and near and ammoamt > 0 then
-			if ply:CanAfford(ammodat.price * ammoamt) then
+		if ammodat and near and amount > 0 then
+			if ply:CanAfford(ammodat.price * amount) then
 				if (!ply.nextBuy or ply.nextBuy < CurTime()) then
 					ply:EmitSound("items/ammo_pickup.wav", 100, math.random(80, 90))
 					near:EmitSound("ambient/levels/labs/coinslot1.wav", 100, math.random(110, 150))
 
-					ply:GiveMoney(-ammodat.price * ammoamt)
-					ply:GiveAmmo(ammoamt, ammodat.ammo)
+					ply:GiveMoney(-ammodat.price * amount)
+					ply:GiveAmmo(amount, ammodat.ammo)
 
 					ply.nextBuy = CurTime() + .5
 				end
@@ -338,7 +338,7 @@ else
 		local scan = ents.FindInSphere(ply:GetPos(), 128)
 		local near = false
 		for k, v in pairs(scan) do
-			if v:GetClass() == "coop_dispencer" then
+			if v:GetClass() == "coop_dispencer" or v:GetClass() == "npc_merchant" then
 				near = v
 			end
 		end

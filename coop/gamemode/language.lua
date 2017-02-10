@@ -23,3 +23,4 @@ lang.supplied_msg = "You supplied %s."
 -- ents
 lang.ent_vending = "Supply Vending Machine"
 lang.ent_healer = "Healing Station"
+lang.ent_merchant = "Merchant"
